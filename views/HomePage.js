@@ -1,10 +1,9 @@
-import BottonNav from '../components/BottonNav'
+import BottonNav from '../components/BottomNav'
 import { SafeAreaView, ScrollView, StyleSheet, 
     Text, TouchableOpacity, View, 
     FlatList, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 export default function HomePage() {
     // mock data
