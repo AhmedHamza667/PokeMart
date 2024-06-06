@@ -1,8 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
+import BottonNav from '../components/BottonNav'
 import { SafeAreaView, ScrollView, StyleSheet, 
     Text, TouchableOpacity, View, 
     FlatList, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 export default function HomePage() {
     // mock data
@@ -31,8 +33,8 @@ export default function HomePage() {
       );
       
   return (
-    <ScrollView>
         <SafeAreaView style={styles.container}>
+            <StatusBar barStyle="light-content" backgroundColor='black'/>
             <View style={styles.navBar}>
                 <TouchableOpacity style={styles.btn}>
                     <Ionicons name="menu" size={24} color="white" />
@@ -55,19 +57,20 @@ export default function HomePage() {
                  contentContainerStyle={styles.list}
                 />
             </View>
+            <BottonNav />
         </SafeAreaView>
-    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
   },
   rest: {
-    backgroundColor: 'white'
-  },
+    backgroundColor: 'white',
+    flex: 1,  
+    marginBottom: 20
+},
   navBar: {
     backgroundColor: 'black',
     flexDirection: 'row',
@@ -153,5 +156,6 @@ itemImage: {
   imageContainer: {
     position: 'relative',
   },
+  
 
 });
