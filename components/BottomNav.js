@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 10,
     color: '#021D49',
+    fontFamily: 'NexaRegular',
+
   },
   activeTab:{
     backgroundColor: '#1170FF2E',

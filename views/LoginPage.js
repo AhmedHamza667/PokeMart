@@ -38,11 +38,13 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: '40px',
-    fontWeight: 'bold',
+    fontFamily: 'NexaRegular',
     margin: 25,
   },
   text: {
-    marginLeft: 10
+    marginLeft: 10,
+    fontFamily: 'NexaRegular',
+
   },
   input: {
     height: 40,
@@ -64,7 +66,8 @@ const styles = StyleSheet.create({
   submitBtnText : {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'NexaBold',
+
   },
   spacer: {
     flex: 1,

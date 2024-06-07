@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     flexDirection: 'row',
     alignItems: 'center',
+    
   },
   itemImage: {
     width: 114,
@@ -99,13 +100,16 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     fontWeight: '400',
-
+    fontFamily: 'NexaRegular'
   
   },
   itemPrice: {
     fontSize: 14,
     color: '#05A20C',
     fontWeight: '900',
+    fontFamily: 'NexaBold',
+    paddingVertical: 7,
+
    
   },
   imageContainer: {
@@ -132,7 +136,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 700,
     textAlign: 'center',
-    fontFamily: 'Helvetica'
+    fontFamily: 'NexaRegular',
+
   },
   navBar: {
     backgroundColor: 'black',
@@ -145,9 +150,9 @@ const styles = StyleSheet.create({
   },
   header: {
     color: 'white',
-    fontWeight: 'bold',
     fontSize: '20px',
     textAlign: 'center',
+    fontFamily: 'NexaBold',
     
   },
   title: {
@@ -181,10 +186,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
     fontWeight: '700',
+    fontFamily: 'NexaRegular',
+
   },
   total: {
     fontSize: 15,
     fontWeight: '400',
+
   },
   bold: {
     fontWeight: '800',

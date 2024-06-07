@@ -83,9 +83,10 @@ const styles = StyleSheet.create({
   },
   header: {
     color: 'white',
-    fontWeight: 'bold',
     fontSize: '20px',
     textAlign: 'center',
+    fontFamily: 'NexaBold',
+
     
   },
   title: {
@@ -104,14 +105,15 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '300',
     paddingTop: 10,
-    paddingHorizontal: 10
-
+    paddingHorizontal: 10,
+    fontFamily: 'NexaLight',
   },
   userName: {
     fontSize: 32,
-    fontWeight: '700',
     paddingBottom: 10,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    fontFamily: 'NexaBold',
+
   },
   list: {
     paddingHorizontal: 10,
@@ -132,11 +134,15 @@ itemImage: {
   },
   itemName: {
     fontSize: 16,
+    fontFamily: 'NexaLight',
+    paddingTop: 5,
+
   },
   itemPrice: {
     fontSize: 14,
-    paddingBottom: 10,
-    fontWeight: 'bold'
+    paddingTop: 6,
+    fontFamily: 'NexaBold',
+
   },
   addButton: {
     position: 'absolute',
@@ -153,7 +159,8 @@ itemImage: {
   addButtonText: {
     color: '#fff',
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'NexaBold',
+
   },
   imageContainer: {
     position: 'relative',

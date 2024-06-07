@@ -6,6 +6,10 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "splash":{
+      "image" : "./assets/figmaSplash.png",
+      "resizeMode" : "cover"
+    },
     "ios": {
       "supportsTablet": true
     },
@@ -17,6 +21,13 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font"
+      // ,
+      // {
+      //   "fonts" : ["./assets/fonts"]
+      // }
+    ]
   }
 }
