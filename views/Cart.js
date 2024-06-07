@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import BottonNav from '../components/BottomNav'
 import { Ionicons } from '@expo/vector-icons';
+// import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Cart() {
     const cart = [
@@ -33,9 +34,10 @@ export default function Cart() {
       );
 
   return (
+    <>
     
     <SafeAreaView style={styles.outter}>
-        <View style={styles.container}>
+        
         <View style={styles.navBar}>
                 <TouchableOpacity style={styles.btn}>
                     <Ionicons name="menu" size={24} color="white" />
@@ -47,6 +49,8 @@ export default function Cart() {
                     <Ionicons name="person-circle-outline" size={24} color="white" />
                 </TouchableOpacity>
             </View>
+                </SafeAreaView>
+
         <FlatList 
                  style={{paddingTop: 20}}
                  data={cart}
@@ -62,16 +66,14 @@ export default function Cart() {
         </View>
         
         <BottonNav />
-        </View>
+       
         <StatusBar style="light" />
-
-    </SafeAreaView>
+</>
   );
 }
 
 const styles = StyleSheet.create({
     outter: {
-        flex: 1,
         backgroundColor: 'black',
     },
 

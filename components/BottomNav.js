@@ -7,7 +7,7 @@ export default function ButtonNav() {
   const [activeTab, setActiveTab] = useState('home')
   return (
     <>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <TouchableOpacity 
         style={[styles.button, activeTab === 'home' && styles.activeTab]}
         onPress={()=> setActiveTab('home')}>
@@ -30,7 +30,7 @@ export default function ButtonNav() {
         </TouchableOpacity>
         
 
-      </SafeAreaView>
+      </View>
     </>
   );
 }
@@ -48,13 +48,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 60,
     alignItems: 'center',
+    
   },
   button: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10
-
   },
   buttonText: {
     fontSize: 10,

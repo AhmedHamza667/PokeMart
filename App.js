@@ -10,8 +10,8 @@ export default function App() {
     <>
       {/* <SplashScreen /> */}
       {/* <LoginPage /> */}
-      {/* <HomePage /> */}
-      <Cart />
+      <HomePage />
+      {/* <Cart /> */}
     </>
   );
 }

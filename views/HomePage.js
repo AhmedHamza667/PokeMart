@@ -32,6 +32,7 @@ export default function HomePage() {
       );
       
   return (
+    <>
         <SafeAreaView style={styles.container}>
             <View style={styles.navBar}>
                 <TouchableOpacity style={styles.btn}>
@@ -44,6 +45,7 @@ export default function HomePage() {
                     <Ionicons name="person-circle-outline" size={24} color="white" />
                 </TouchableOpacity>
             </View>
+          </SafeAreaView>
             <View style={styles.rest}>
                 <Text style={styles.helloMsg}>Hello,</Text>
                 <Text style={styles.userName}>Ahmed Hamza</Text>
@@ -57,19 +59,18 @@ export default function HomePage() {
             </View>
             <BottonNav />
             <StatusBar style="light" />
-        </SafeAreaView>
+        </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: 'black',
   },
   rest: {
     backgroundColor: 'white',
-    flex: 1,  
-    marginBottom: 20
+    marginBottom: 20,
+    flex: 1,
 },
   navBar: {
     backgroundColor: 'black',
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingHorizontal: 10,
+    paddingBottom: 30,
   },
   itemContainer: {
     flex: 1,
