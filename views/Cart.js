@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import BottonNav from '../components/BottomNav'
 import { Ionicons } from '@expo/vector-icons';
 
@@ -33,7 +33,9 @@ export default function Cart() {
       );
 
   return (
-    <SafeAreaView style={styles.container}>
+    
+    <SafeAreaView style={styles.outter}>
+        <View style={styles.container}>
         <View style={styles.navBar}>
                 <TouchableOpacity style={styles.btn}>
                     <Ionicons name="menu" size={24} color="white" />
@@ -58,12 +60,21 @@ export default function Cart() {
                 <Text style={styles.orderButtonText}>Place Order</Text>
             </TouchableOpacity>
         </View>
+        
         <BottonNav />
+        </View>
+        <StatusBar style="light" />
+
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+    outter: {
+        flex: 1,
+        backgroundColor: 'black',
+    },
+
   container: {
     flex: 1,
     backgroundColor: '#fff',  
@@ -150,13 +161,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   footer: {
-    // flex: 1,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    bottom: 44,
-    
+    paddingHorizontal: 20,    
   },
   orderButton: {
     backgroundColor: '#00388E',

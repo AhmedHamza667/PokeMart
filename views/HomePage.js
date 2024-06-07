@@ -33,7 +33,6 @@ export default function HomePage() {
       
   return (
         <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="light-content" backgroundColor='black'/>
             <View style={styles.navBar}>
                 <TouchableOpacity style={styles.btn}>
                     <Ionicons name="menu" size={24} color="white" />
@@ -57,6 +56,7 @@ export default function HomePage() {
                 />
             </View>
             <BottonNav />
+            <StatusBar style="light" />
         </SafeAreaView>
   );
 }
@@ -64,6 +64,7 @@ export default function HomePage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'black',
   },
   rest: {
     backgroundColor: 'white',
