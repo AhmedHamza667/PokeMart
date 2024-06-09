@@ -2,13 +2,14 @@
   "expo": {
     "name": "eComApp",
     "slug": "eComApp",
+    "scheme": "eComApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash":{
-      "image" : "./assets/figmaSplash.png",
-      "resizeMode" : "cover"
+    "splash": {
+      "image": "./assets/figmaSplash.png",
+      "resizeMode": "cover"
     },
     "ios": {
       "supportsTablet": true
@@ -20,14 +21,12 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
-      "expo-font"
-      // ,
-      // {
-      //   "fonts" : ["./assets/fonts"]
-      // }
+      "expo-font",
+      "expo-router"
     ]
   }
 }

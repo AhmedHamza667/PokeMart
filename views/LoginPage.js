@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Button, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -20,7 +21,9 @@ export default function LoginPage() {
             </View>
 
             <TouchableOpacity style={styles.submitBtn}>
-                <Text style={styles.submitBtnText}>Login</Text>
+              <Link href="/HomePage">
+                  <Text style={styles.submitBtnText}>Login</Text>
+              </Link>
             </TouchableOpacity>
            
 

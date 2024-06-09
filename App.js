@@ -1,9 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
-// import SplashScreen from './views/SplashScreenView';
 import LoginPage from './views/LoginPage';
-import HomePage from './views/HomePage';
-import Cart from './views/Cart';
+import HomePage from './app/HomePage';
+import Cart from './app/Cart';
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
@@ -31,7 +29,7 @@ export default function App() {
       {/* <SplashScreen /> */}
       {/* <LoginPage /> */}
       {/* <HomePage /> */}
-      <Cart />
+      {/* <Cart /> */}
     </>
   );
 }

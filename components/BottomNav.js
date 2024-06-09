@@ -1,32 +1,37 @@
-import { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
+import { Link, usePathname } from 'expo-router';
 
 export default function ButtonNav() {
-  const [activeTab, setActiveTab] = useState('home')
+  const currentRoute = usePathname();
+  
   return (
     <>
       <View style={styles.container}>
+          
         <TouchableOpacity 
-        style={[styles.button, activeTab === 'home' && styles.activeTab]}
-        onPress={()=> setActiveTab('home')}>
+        style={[styles.button, currentRoute === '/HomePage' && styles.activeTab]}>
+          <Link href="/HomePage">
             <View style={styles.left}>
-                <Ionicons name={activeTab === 'home' ? 'home' : 'home-outline'} size={24} color="black" />
+                <Ionicons name={currentRoute === '/HomePage' ? 'home' : 'home-outline'} size={24} color="black" />
                 <Text style={styles.buttonText}>
                     Home
                 </Text>
             </View>
+          </Link>
         </TouchableOpacity>
+
+       
         <TouchableOpacity 
-        style={[styles.button, activeTab === 'cart' && styles.activeTab]}
-        onPress={()=> setActiveTab('cart')}>
+        style={[styles.button, currentRoute === '/Cart' && styles.activeTab]}>
+            <Link href="/Cart">
              <View style={styles.left}>
-                <Ionicons name={activeTab === 'cart' ? 'cart' : 'cart-outline'} size={24} color="black" />
+                <Ionicons name={currentRoute === '/Cart' ? 'cart' : 'cart-outline'} size={24} color="black" />
                 <Text style={styles.buttonText}>
                     Cart
                 </Text>
             </View>
+            </Link>
         </TouchableOpacity>
         
 

@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     fontSize: '20px',
     textAlign: 'center',
     fontFamily: 'NexaBold',
-
     
   },
   title: {
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingHorizontal: 10,
-    paddingBottom: 30,
+    paddingBottom: 42,
   },
   itemContainer: {
     flex: 1,
