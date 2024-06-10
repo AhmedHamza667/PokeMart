@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Link, usePathname } from 'expo-router';
 
@@ -33,7 +33,7 @@ export default function ButtonNav() {
             </View>
             </Link>
         </TouchableOpacity>
-        
+   
 
       </View>
     </>

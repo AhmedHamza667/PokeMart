@@ -1,11 +1,13 @@
 import BottonNav from '../components/BottomNav'
-import { SafeAreaView, ScrollView, StyleSheet, 
+import { ScrollView, StyleSheet, 
     Text, TouchableOpacity, View, 
     FlatList, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native';
 
 export default function HomePage() {
+  
     // mock data
     const data = [
         { id: '1', name: 'Teddy Bear', price: '$12', image: 'https://images.unsplash.com/photo-1562040506-a9b32cb51b94?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
@@ -58,7 +60,7 @@ export default function HomePage() {
                 />
             </View>
             <BottonNav />
-            <StatusBar style="light" />
+            <StatusBar style='dark'/>
         </>
   );
 }
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingHorizontal: 10,
-    paddingBottom: 42,
+    paddingBottom: 10,
   },
   itemContainer: {
     flex: 1,

@@ -49,7 +49,7 @@ export default function Cart() {
                     <Ionicons name="person-circle-outline" size={24} color="white" />
                 </TouchableOpacity>
             </View>
-                </SafeAreaView>
+      </SafeAreaView>
 
         <FlatList 
                  style={{paddingTop: 20}}
