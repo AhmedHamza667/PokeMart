@@ -42,7 +42,7 @@ export default function ButtonNav() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    borderRadius: '63px',
+    borderRadius: 63,
     marginHorizontal: 20,
     height: 60,
     width: 341,

@@ -99,14 +99,14 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontSize: 16,
-    fontWeight: '400',
+    fontWeight: 'normal',
     fontFamily: 'NexaRegular'
   
   },
   itemPrice: {
     fontSize: 14,
     color: '#05A20C',
-    fontWeight: '900',
+    fontWeight: 'bold',
     fontFamily: 'NexaBold',
     paddingVertical: 7,
 
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   quantityInput: {
     width: 40,
     fontSize: 16,
-    fontWeight: 700,
+    fontWeight: 'bold',
     textAlign: 'center',
     fontFamily: 'NexaRegular',
 
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: 'white',
-    fontSize: '20px',
+    fontSize: 20,
     textAlign: 'center',
     fontFamily: 'NexaBold',
     
@@ -185,17 +185,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: 'bold',
     fontFamily: 'NexaRegular',
 
   },
   total: {
     fontSize: 15,
-    fontWeight: '400',
+    fontWeight: 'normal',
 
   },
   bold: {
-    fontWeight: '800',
+    fontWeight: 'bold',
   }
   
 });

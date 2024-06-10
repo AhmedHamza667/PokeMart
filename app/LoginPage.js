@@ -1,7 +1,7 @@
 import { Link } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { Button, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, Dimensions, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 export default function LoginPage() {
@@ -12,7 +12,6 @@ export default function LoginPage() {
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [password, setPassword] = useState('');
   const [isValidPassword, setIsValidPassword] = useState(false);
-
 
   useEffect(() => {
     if (firstname && lastname && isValidEmail && isValidPassword) {
@@ -79,9 +78,10 @@ const styles = StyleSheet.create({
     
   },
   header: {
-    fontSize: '40px',
+    fontSize: Dimensions.get('window').width >= 393 ? 40 : 30,
     fontFamily: 'NexaRegular',
     margin: 25,
+    textAlign: 'center',
   },
   text: {
     marginLeft: 10,

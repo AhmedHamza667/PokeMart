@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: 'white',
-    fontSize: '20px',
+    fontSize: 20,
     textAlign: 'center',
     fontFamily: 'NexaBold',
     
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingHorizontal: 10,
-    paddingBottom: 10,
+    paddingBottom: 40,
   },
   itemContainer: {
     flex: 1,
