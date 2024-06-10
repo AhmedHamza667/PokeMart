@@ -1,10 +1,12 @@
 import HomePage from "./HomePage";
-import LoginPage from "../views/LoginPage";
+import LoginPage from "./LoginPage";
 import Cart from "./Cart";
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import Test from "./Test";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Redirect } from "expo-router";
 
 
 
@@ -30,8 +32,8 @@ export default function Page() {
     }
   
   return (
-   <LoginPage />
-  // <Test />
+   <Redirect href="/LoginPage" />
+    // <Test />
   );
 }
 

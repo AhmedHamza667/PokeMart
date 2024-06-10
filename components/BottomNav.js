@@ -21,7 +21,6 @@ export default function ButtonNav() {
           </Link>
         </TouchableOpacity>
 
-       
         <TouchableOpacity 
         style={[styles.button, currentRoute === '/Cart' && styles.activeTab]}>
             <Link href="/Cart">

@@ -60,7 +60,7 @@ export default function HomePage() {
                 />
             </View>
             <BottonNav />
-            <StatusBar style='dark'/>
+            <StatusBar style='light'/>
         </>
   );
 }
