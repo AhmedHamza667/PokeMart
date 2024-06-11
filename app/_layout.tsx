@@ -8,12 +8,12 @@ export default function _layout() {
         <Stack.Screen name='LoginPage' options={{
             headerShown: false,
         }} />
-        <Stack.Screen name='HomePage' options={{
+        {/* {/* <Stack.Screen name='(tabs)/HomePage' options={{
             headerShown: false,
-        }}/>
-        <Stack.Screen name='Cart' options={{
+        }}/> */}
+        <Stack.Screen name='(tabs)' options={{
             headerShown: false,
-        }}/>
+        }}/> 
 
     </Stack>
   )

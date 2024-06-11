@@ -1,4 +1,4 @@
-import BottonNav from '../components/BottomNav'
+import BottonNav from '../../components/BottomNav'
 import { ScrollView, StyleSheet, 
     Text, TouchableOpacity, View, 
     FlatList, Image } from 'react-native';
@@ -59,7 +59,7 @@ export default function HomePage() {
                  contentContainerStyle={styles.list}
                 />
             </View>
-            <BottonNav />
+            {/* <BottonNav /> */}
             <StatusBar style='light'/>
         </>
   );
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingHorizontal: 10,
-    paddingBottom: 40,
+    
   },
   itemContainer: {
     flex: 1,
