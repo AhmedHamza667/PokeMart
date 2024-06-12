@@ -1,4 +1,4 @@
-import LoginPage from "./LoginPage";
+import LoginPage from "./SignUp";
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
@@ -30,7 +30,7 @@ export default function Page() {
     }
   
   return (
-   <Redirect href="/LoginPage" />
+   <Redirect href="/HomePage" />
     // <Test />
   );
 }

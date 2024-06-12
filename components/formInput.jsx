@@ -1,15 +1,15 @@
 // components/formInput.jsx
-import React from "react";
-import { StyleSheet, Text, TextInput } from "react-native";
+import {React} from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Controller } from "react-hook-form";
 
-const FormInput = ({ control, name, ...otherProps }) => {
+const FormInput = ({ control, name, containerStyle, ...otherProps }) => {
   return (
     <Controller
       control={control}
       name={name}
       render={({
-        field: { value, onChange, onBlur },
+        field: { value, onChange, onBlur, ref },
         fieldState: { error },
       }) => (
         <>
@@ -18,9 +18,9 @@ const FormInput = ({ control, name, ...otherProps }) => {
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
+            ref={ref}
             {...otherProps}
           />
-          {error && <Text style={styles.errorMessage}>{error.message}</Text>}
         </>
       )}
     />
@@ -38,10 +38,5 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#F4F7F8",
     borderRadius: 5,
-  },
-  errorMessage: {
-    color: 'red',
-    marginHorizontal: 10,
-    marginBottom: 20,
   },
 });

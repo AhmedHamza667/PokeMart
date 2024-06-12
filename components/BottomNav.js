@@ -11,26 +11,22 @@ export default function ButtonNav() {
           
         <TouchableOpacity 
         style={[styles.button, currentRoute === '/HomePage' && styles.activeTab]}>
-          <Link href="/HomePage">
             <View style={styles.left}>
                 <Ionicons name={currentRoute === '/HomePage' ? 'home' : 'home-outline'} size={24} color="black" />
                 <Text style={styles.buttonText}>
                     Home
                 </Text>
             </View>
-          </Link>
         </TouchableOpacity>
 
         <TouchableOpacity 
         style={[styles.button, currentRoute === '/Cart' && styles.activeTab]}>
-            <Link href="/Cart">
              <View style={styles.left}>
                 <Ionicons name={currentRoute === '/Cart' ? 'cart' : 'cart-outline'} size={24} color="black" />
                 <Text style={styles.buttonText}>
                     Cart
                 </Text>
             </View>
-            </Link>
         </TouchableOpacity>
    
 
