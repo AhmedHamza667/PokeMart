@@ -2,25 +2,45 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import BottonNav from '../../components/BottomNav'
 import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react';
 // import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Cart() {
-    const cart = [
-        { id: '1', name: 'Teddy Bear', price: '$12', image: 'https://images.unsplash.com/photo-1562040506-a9b32cb51b94?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-        { id: '2', name: 'Batman Car', price: '$20', image: 'https://images.unsplash.com/photo-1657249771314-b9869bb0e321?q=80&w=2846&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    const [cart, setCart] = useState([
+        { id: '1', name: 'Teddy Bear', quantity: 1, price: '$12', image: 'https://images.unsplash.com/photo-1562040506-a9b32cb51b94?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+        { id: '2', name: 'Batman Car', quantity: 1, price: '$20', image: 'https://images.unsplash.com/photo-1657249771314-b9869bb0e321?q=80&w=2846&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
         // { id: '3', name: 'Toy Story Toy', price: '$12', image: 'https://images.unsplash.com/photo-1614897464244-86c6b2fdda79?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-    ];
+    ]);
     // render function
+ 
+    function handleAdd(item) {
+      const newCart = cart.map(cartItem => {
+          if (cartItem.id === item.id) {
+              return { ...cartItem, quantity: cartItem.quantity + 1 };
+          }
+          return cartItem;
+      });
+      setCart(newCart);
+  }
+  function handleReduce(item) {
+    const newCart = cart.map(cartItem => {
+        if (cartItem.id === item.id) {
+            return { ...cartItem, quantity: cartItem.quantity - 1 };
+        }
+        return cartItem;
+    });
+    setCart(newCart);
+}
     const renderItem = ({ item }) => (
         <View style={styles.itemContainer}>
           <View style={styles.imageContainer}>
             <Image source={{ uri: item.image }} style={styles.itemImage} />
             <View style={styles.quantitySelector}>
-                <TouchableOpacity >
+                <TouchableOpacity onPress={()=> {handleReduce(item)}}>
                 <Ionicons name="remove-circle" size={24} color="gray" />
                 </TouchableOpacity>
-                <Text style={styles.quantityInput}> 01</Text>
-                <TouchableOpacity >
+                <Text style={styles.quantityInput}> 0{item.quantity}</Text>
+                <TouchableOpacity onPress={()=> {handleAdd(item)}}>
                 <Ionicons name="add-circle-sharp" size={24} color="black" />
                 </TouchableOpacity>
             </View>

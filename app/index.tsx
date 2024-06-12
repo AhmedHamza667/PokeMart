@@ -1,6 +1,4 @@
-import HomePage from "./HomePage";
 import LoginPage from "./LoginPage";
-import Cart from "./Cart";
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';

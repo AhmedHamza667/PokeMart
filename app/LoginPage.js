@@ -46,7 +46,7 @@ export default function LoginPage() {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        behavior="padding"
+        behavior="height"
         style={styles.container}
         keyboardVerticalOffset={60}
       >
@@ -66,7 +66,12 @@ export default function LoginPage() {
           placeholder="Last Name"
         />
         <Text style={styles.text}>Enter Email</Text>
-        <FormInput control={control} name={"email"} placeholder="Email" />
+        <FormInput 
+        control={control} 
+        name={"email"} 
+        placeholder="Email" 
+        keyboardType="email-address"
+        />
         <Text style={styles.text}>Password</Text>
         <FormInput
           control={control}
