@@ -11,7 +11,7 @@ export default function _layout() {
       contentStyle: { backgroundColor: "#fff" },
   }}>
         <Stack.Screen 
-        name='SignUp' 
+        name='termsModal' 
         options={{
           headerStyle:{
             backgroundColor: "#000000"
@@ -21,7 +21,7 @@ export default function _layout() {
             fontSize: 20,
             fontFamily: "NexaBold",
           },
-          headerTitle: "Sign Up",
+          headerTitle: "Terms & Conditions",
           headerBackTitleVisible: false,
           headerLeft: () => (
             <Ionicons
@@ -34,19 +34,7 @@ export default function _layout() {
           ),
 
         }} />
-        {/* {/* <Stack.Screen name='(tabs)/HomePage' options={{
-            headerShown: false,
-        }}/> */}
-        <Stack.Screen name='LogIn' options={{
-            headerShown: false,
-        }} />
-
-        <Stack.Screen name='(tabs)' options={{
-            headerShown: false,
-        }}/> 
-        <Stack.Screen name='(modals)' options={{
-            headerShown: false,
-        }}/> 
+     
 
     </Stack>
   )
