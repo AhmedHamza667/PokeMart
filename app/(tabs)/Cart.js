@@ -56,21 +56,7 @@ export default function Cart() {
   return (
     <>
     
-    <SafeAreaView style={styles.outter}>
-        
-        <View style={styles.navBar}>
-                <TouchableOpacity style={styles.btn}>
-                    <Ionicons name="menu" size={24} color="white" />
-                </TouchableOpacity>
-                <View style={styles.title}>
-                    <Text style={styles.header}>Cart</Text>
-                </View>
-                <TouchableOpacity style={styles.img}>
-                    <Ionicons name="person-circle-outline" size={24} color="white" />
-                </TouchableOpacity>
-            </View>
-      </SafeAreaView>
-
+   
         <FlatList 
                  style={{paddingTop: 20}}
                  data={cart}
@@ -158,34 +144,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'NexaRegular',
 
-  },
-  navBar: {
-    backgroundColor: 'black',
-    flexDirection: 'row',
-    alignContent: 'space-between',
-    height: 60,
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    
-  },
-  header: {
-    color: 'white',
-    fontSize: 20,
-    textAlign: 'center',
-    fontFamily: 'NexaBold',
-    
-  },
-  title: {
-    flex: 1,
-  },
-
-  btn: {
-    flex: 1,
-    alignItems: 'flex-start'
-  },
-  img: {
-    flex: 1,
-    alignItems: 'flex-end',
   },
   footer: {
     flex: 1,

@@ -36,17 +36,7 @@ export default function HomePage() {
   return (
     <>
         <SafeAreaView style={styles.container}>
-            <View style={styles.navBar}>
-                <TouchableOpacity style={styles.btn}>
-                    <Ionicons name="menu" size={24} color="white" />
-                </TouchableOpacity>
-                <View style={styles.title}>
-                    <Text style={styles.header}>Home</Text>
-                </View>
-                <TouchableOpacity style={styles.img}>
-                    <Ionicons name="person-circle-outline" size={24} color="white" />
-                </TouchableOpacity>
-            </View>
+            
           </SafeAreaView>
             <View style={styles.rest}>
                 <Text style={styles.helloMsg}>Hello,</Text>
@@ -74,34 +64,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flex: 1,
 },
-  navBar: {
-    backgroundColor: 'black',
-    flexDirection: 'row',
-    alignContent: 'space-between',
-    height: 60,
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    
-  },
-  header: {
-    color: 'white',
-    fontSize: 20,
-    textAlign: 'center',
-    fontFamily: 'NexaBold',
-    
-  },
-  title: {
-    flex: 1,
-  },
-
-  btn: {
-    flex: 1,
-    alignItems: 'flex-start'
-  },
-  img: {
-    flex: 1,
-    alignItems: 'flex-end',
-  },
+  
   helloMsg: {
     fontSize: 32,
     fontWeight: '300',

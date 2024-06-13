@@ -1,16 +1,46 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { Stack } from 'expo-router'
+import { Stack, useNavigation } from 'expo-router'
+import { Ionicons } from '@expo/vector-icons';
 
 export default function _layout() {
+  const navigation = useNavigation();
   return (
-    <Stack>
-        <Stack.Screen name='SignUp' options={{
-            headerShown: false,
+    <Stack
+    screenOptions={{
+      contentStyle: { backgroundColor: "#fff" },
+  }}>
+        <Stack.Screen 
+        name='SignUp' 
+        options={{
+          headerStyle:{
+            backgroundColor: "#000000"
+          },
+          headerTitleStyle:{
+            color: "#fff",
+            fontSize: 20,
+            fontFamily: "NexaBold",
+          },
+          headerTitle: "Sign Up",
+          headerBackTitleVisible: false,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={24}
+              color="#fff"
+              style={{ marginLeft: 10 }} // Adjust style as needed
+              onPress={() => navigation.goBack()}
+            />
+          ),
+
         }} />
         {/* {/* <Stack.Screen name='(tabs)/HomePage' options={{
             headerShown: false,
         }}/> */}
+        <Stack.Screen name='LogIn' options={{
+            headerShown: false,
+        }} />
+
         <Stack.Screen name='(tabs)' options={{
             headerShown: false,
         }}/> 

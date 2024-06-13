@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "../components/formInput";
 import { Ionicons } from '@expo/vector-icons';
+import CustomCheckbox from "../components/CustomCheckBox";
 
 import {
   Alert,
@@ -24,6 +25,7 @@ import { Controller, useForm } from "react-hook-form";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const formSchema = z.object({
     email: z.string().email("Please enter a valid email"),
     firstName: z.string().min(3, "First name must be at least 3 characters"),
@@ -46,18 +48,21 @@ export default function SignUp() {
   });
   const { isValid, isDirty, dirtyFields, errors } = formState;
   const onSubmit = (data) => {
+    if (!isChecked){
+      Alert.alert('Please agree to the Terms & Conditions');
+      return;
+    }
     router.push('/HomePage')
   };
   const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        behavior="height"
+        behavior="padding"
         style={styles.container}
-        keyboardVerticalOffset={60}
       >
         <Text style={styles.header}>Enter your details</Text>
-
+      <View style={styles.form}>
         <Text style={styles.text}>First Name</Text>
         <FormInput
           control={control}
@@ -102,7 +107,7 @@ export default function SignUp() {
             onSubmitEditing={() => setFocus('confirmPassword')} 
           />
           <Ionicons
-            name={showPassword ? 'eye' : 'eye-off'}
+            name={showPassword ? 'eye-off' : 'eye'}
             size={24}
             color="black"
             onPress={() => setShowPassword(!showPassword)}
@@ -117,14 +122,14 @@ export default function SignUp() {
             control={control}
             name={"confirmPassword"}
             placeholder="Confirm Password"
-            secureTextEntry
+            secureTextEntry={!showPassword}
             returnKeyType="done"
             keyboardType="default"
             style={styles.input}
             onSubmitEditing={handleSubmit(onSubmit)} 
           />
           <Ionicons
-            name={showPassword ? 'eye' : 'eye-off'}
+            name={showPassword ? 'eye-off' : 'eye'}
             size={24}
             color="black"
             onPress={() => setShowPassword(!showPassword)}
@@ -132,16 +137,16 @@ export default function SignUp() {
           />
         </View>
         {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword.message}</Text>}
-
+        </View>
         <View style={styles.spacer}></View>
-
+        <CustomCheckbox isChecked={isChecked} onChange={() => setIsChecked(!isChecked)}/>
         <TouchableOpacity
           style={[styles.submitBtn, !isValid ? styles.disabled : null]}
           onPress={handleSubmit(onSubmit)}
         >
-          <Text style={styles.submitBtnText}>SignUp</Text>
+          <Text style={styles.submitBtnText}>Sign Up</Text>
         </TouchableOpacity>
-        <StatusBar style="auto" />
+        <StatusBar style="light" />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -151,6 +156,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  form: {
+    marginHorizontal: 8
   },
   header: {
     fontSize: Dimensions.get("window").width >= 393 ? 40 : 30,
@@ -168,7 +176,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F4F7F8",
     borderRadius: 5,
     height: 40,
-    margin: 8,
+    marginVertical: 8,
     paddingHorizontal: 10,
   },
   input: {
