@@ -34,9 +34,6 @@ export default function _layout() {
           ),
 
         }} />
-        {/* {/* <Stack.Screen name='(tabs)/HomePage' options={{
-            headerShown: false,
-        }}/> */}
         <Stack.Screen name='LogIn' options={{
             headerShown: false,
         }} />

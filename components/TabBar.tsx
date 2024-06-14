@@ -98,6 +98,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginHorizontal: 12
+
   },
   buttonText: {
     fontSize: 10,
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
   activeTab: {
     backgroundColor: "#1170FF2E",
     borderRadius: 24,
-    width: 178,
+    width: 150,
     height: 40,
   },
   left: {

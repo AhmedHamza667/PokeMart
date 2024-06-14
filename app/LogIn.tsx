@@ -82,12 +82,14 @@ export default function LogIn() {
           numColumns={2}
           contentContainerStyle={styles.grid}
         />
-
+        <View>
         <Text style={styles.header}>Fashion Tap</Text>
         <Text style={styles.intro}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio
           temporibus autem incidunt, sequi
         </Text>
+        </View>
+        
         <View style={styles.form}>
           <Text>Enter Email</Text>
           <FormInput
@@ -108,8 +110,10 @@ export default function LogIn() {
             name={"password"}
             placeholder="Password"
             secureTextEntry
-            returnKeyType="next"
+            returnKeyType="done"
             keyboardType="default"
+            onSubmitEditing={handleSubmit(onSubmit)} 
+
           />
           {errors.password && (
             <Text style={styles.errorText}>{errors.password.message}</Text>
@@ -140,6 +144,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     marginHorizontal: 15,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
   },
   header: {
     fontSize: 32,
@@ -150,12 +157,6 @@ const styles = StyleSheet.create({
     fontFamily: "NexaRegular",
     fontSize: 14,
     paddingBottom: 10,
-  },
-  input: {
-    flex: 1,
-  },
-  icon: {
-    padding: 10,
   },
   submitBtn: {
     backgroundColor: "#00388E",
@@ -170,9 +171,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontFamily: "NexaBold",
-  },
-  spacer: {
-    flex: 1,
   },
   disabled: {
     opacity: 0.5,
@@ -193,7 +191,6 @@ const styles = StyleSheet.create({
   },
   grid: {
     justifyContent: "center",
-    paddingBottom: 20,
   },
   image: {
     width: "100%",
