@@ -143,11 +143,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    marginHorizontal: 15,
     flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginRight: 8
+    alignItems: "center",
+    
+    // marginRight: 8
   },
   header: {
     fontSize: 32,
@@ -178,7 +177,6 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: "red",
-    marginHorizontal: 10,
     marginBottom: 20,
   },
   createBtn: {

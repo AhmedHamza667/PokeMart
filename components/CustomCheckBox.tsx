@@ -59,9 +59,6 @@ const CustomCheckbox = ({ isChecked, onChange }) => {
 const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-    justifyContent: "center",
   },
   checkbox: {
     width: 16,
@@ -80,6 +77,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#4A5D79",
     fontFamily: "NexaRegular",
+    
   },
   link: {
     textDecorationLine: "underline",
