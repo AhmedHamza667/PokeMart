@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "flex-start",
+    marginRight: 8
   },
   header: {
     fontSize: 32,

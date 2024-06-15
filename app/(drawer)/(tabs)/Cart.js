@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Image, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import BottonNav from '../../components/BottomNav'
+import BottonNav from '../../../components/BottomNav'
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 // import { SafeAreaView } from 'react-native-safe-area-context';

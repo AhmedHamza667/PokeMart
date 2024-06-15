@@ -6,17 +6,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "../components/formInput";
 import { Ionicons } from '@expo/vector-icons';
 import CustomCheckbox from "../components/CustomCheckBox";
+import Modal from "react-native-modal";
 
 import {
   Alert,
-  Button,
   Dimensions,
   KeyboardAvoidingView,
-  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -58,7 +56,7 @@ export default function SignUp() {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        behavior="padding"
+        behavior="position"      
         style={styles.container}
       >
         <Text style={styles.header}>Enter your details</Text>
@@ -138,7 +136,6 @@ export default function SignUp() {
         </View>
         {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword.message}</Text>}
         </View>
-        <View style={styles.spacer}></View>
         <CustomCheckbox isChecked={isChecked} onChange={() => setIsChecked(!isChecked)}/>
         <TouchableOpacity
           style={[styles.submitBtn, !isValid ? styles.disabled : null]}
@@ -192,7 +189,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     alignSelf: "center",
-    marginTop: 20,
   },
   submitBtnText: {
     color: "#fff",

@@ -30,7 +30,7 @@ export default function Page() {
     }
   
   return (
-   <Redirect href="/LogIn" />
+   <Redirect href="/HomePage" />
     // <Test />
   );
 }

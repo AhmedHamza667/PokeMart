@@ -1,4 +1,4 @@
-import BottonNav from '../../components/BottomNav'
+import BottonNav from '../../../components/BottomNav'
 import { ScrollView, StyleSheet, 
     Text, TouchableOpacity, View, 
     FlatList, Image } from 'react-native';
