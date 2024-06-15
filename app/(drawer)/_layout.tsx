@@ -9,14 +9,13 @@ export default function _layout() {
       screenOptions={{
         drawerStyle: {
           width: '85%', // Change this value to take more width of the screen
-          backgroundColor: 'rgba(255, 255, 255, 0.5)',
         },
         sceneContainerStyle: {
           backgroundColor: 'transparent',
         },
       }}
 >
-        <Drawer.Screen
+        {/* <Drawer.Screen
           name="aboutUs" 
           options={{
             drawerLabel: 'About Us',
@@ -43,7 +42,7 @@ export default function _layout() {
             drawerLabel: 'Privacy Policy',
             title: 'Privacy Policy',
           }}
-        />
+        /> */}
         <Drawer.Screen
           name="(tabs)"  
           options={{

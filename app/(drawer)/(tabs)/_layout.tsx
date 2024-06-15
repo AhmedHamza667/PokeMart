@@ -35,7 +35,7 @@ export default function TabsLayout() {
             size={24}
             color="#fff"
             style={{ marginRight: 10 }} // Adjust style as needed
-            // onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate('userProfile')}
           />
         ),
       }}
