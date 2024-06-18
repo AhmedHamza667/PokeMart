@@ -11,6 +11,7 @@ export default function TabsLayout() {
   return (
     <Tabs
       tabBar={props => <TabBar {...props} />}
+      sceneContainerStyle={{backgroundColor: 'transparent'}}
       screenOptions={{
         headerStyle: {
           backgroundColor: "#000000",

@@ -35,9 +35,6 @@ export default function HomePage() {
       
   return (
     <>
-        <SafeAreaView style={styles.container}>
-            
-          </SafeAreaView>
             <View style={styles.rest}>
                 <Text style={styles.helloMsg}>Hello,</Text>
                 <Text style={styles.userName}>Ahmed Hamza</Text>
@@ -56,13 +53,10 @@ export default function HomePage() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'black',
-  },
   rest: {
     backgroundColor: 'white',
-    marginBottom: 20,
     flex: 1,
+    marginBottom: 60
 },
   
   helloMsg: {

@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "../components/formInput";
@@ -13,6 +13,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Platform,
+  StatusBar
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
@@ -71,9 +73,8 @@ export default function LogIn() {
       <Image source={{ uri: item.image }} style={styles.image} />
     </View>
   );
-
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, styles.AndroidSafeArea]}>
       <KeyboardAvoidingView behavior="position">
         <FlatList
           data={data}
@@ -133,7 +134,7 @@ export default function LogIn() {
             <Text style={styles.createBtnTxt}>Create account</Text>
           </TouchableOpacity>
         </View>
-        <StatusBar style="auto" />
+        <StatusBar barStyle="dark-content" />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -141,12 +142,8 @@ export default function LogIn() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    flexDirection: "column",
     alignItems: "center",
     
-    // marginRight: 8
   },
   header: {
     fontSize: 32,
@@ -205,4 +202,8 @@ const styles = StyleSheet.create({
   form: {
     paddingTop: 50,
   },
+  AndroidSafeArea: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+  }
+
 });

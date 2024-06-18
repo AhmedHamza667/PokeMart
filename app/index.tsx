@@ -12,9 +12,9 @@ import { Redirect } from "expo-router";
 export default function Page() {
   
     const [fontsLoaded] = useFonts({
-      "NexaRegular" : require("../assets/fonts/NexaRegular.otf"),
-      "NexaLight" : require("../assets/fonts/NexaLight.otf"),
-      "NexaBold" : require("../assets/fonts/NexaBold.otf")
+      "NexaRegular" : require("../assets/fonts/Nexa-Regular.otf"),
+      "NexaLight" : require("../assets/fonts/Nexa-Light.otf"),
+      "NexaBold" : require("../assets/fonts/Nexa-Bold.otf")
     });
     useEffect(() => {
       async function prepare() {
@@ -30,7 +30,7 @@ export default function Page() {
     }
   
   return (
-   <Redirect href="/userProfile" />
+   <Redirect href="/LogIn" />
     // <Test />
   );
 }
