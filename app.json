@@ -12,7 +12,8 @@
       "resizeMode": "cover"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.example.myapp",
     },
     "android": {
       "adaptiveIcon": {

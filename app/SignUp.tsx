@@ -1,12 +1,14 @@
-import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "../components/formInput";
 import { Ionicons } from "@expo/vector-icons";
 import CustomCheckbox from "../components/CustomCheckBox";
-import Modal from "react-native-modal";
+import { useSelector, useDispatch } from 'react-redux'
+import { signUp } from "../store/authReducer";
+import Toast from 'react-native-toast-message';
+
 
 import {
   Alert,
@@ -22,6 +24,7 @@ import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 
 export default function SignUp() {
+  const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const formSchema = z
@@ -46,13 +49,25 @@ export default function SignUp() {
     },
     resolver: zodResolver(formSchema),
   });
-  const { isValid, isDirty, dirtyFields, errors } = formState;
+  const { isValid, errors } = formState;
+
+
+
   const onSubmit = (data) => {
-    if (!isChecked) {
-      Alert.alert("Please agree to the Terms & Conditions");
-      return;
-    }
-    router.push("/HomePage");
+      const {firstName, lastName, email, password} = data;
+      if (!isChecked) {
+        Alert.alert("Please agree to the Terms & Conditions");
+        return;
+      }
+      dispatch(signUp({firstName, lastName, email, password}));
+      Toast.show({
+        type: 'success',
+        text1: 'User Created',
+      });
+        setTimeout(() => {
+          router.push("/LogIn");
+        }, 2000);
+
   };
   const router = useRouter();
   return (
@@ -160,6 +175,7 @@ export default function SignUp() {
           </TouchableOpacity>
         </View>
         <StatusBar style="light" />
+        <Toast />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

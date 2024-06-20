@@ -3,6 +3,8 @@ import { Link } from "expo-router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "../components/formInput";
+import { useSelector, useDispatch } from 'react-redux'
+import Toast from 'react-native-toast-message';
 
 import {
   FlatList,
@@ -18,7 +20,14 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
+import { login } from "../store/authReducer";
+import { RootState } from "../store/store";
+import { useEffect } from "react";
 export default function LogIn() {
+  const dispatch = useDispatch()
+  const router = useRouter();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+
   const formSchema = z.object({
     email: z.string().email("Please enter a valid email"),
     password: z.string().min(8, "Password must be at least 8 characters"),
@@ -31,10 +40,28 @@ export default function LogIn() {
     resolver: zodResolver(formSchema),
   });
   const { isValid, errors } = formState;
+  useEffect(() => {
+    if (isLoggedIn) {
+      Toast.show({
+        type: 'success',
+        text1: 'Login Successful',
+      });
+      setTimeout(() => {
+        router.push("/HomePage");
+      }, 2000);
+    }
+    else {
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid email or password',
+      });
+    }
+  }, [isLoggedIn, router]);
+
   const onSubmit = (data) => {
-    router.push("/HomePage");
+    const {email, password} = data;
+    dispatch(login({email, password}))
   };
-  const router = useRouter();
   const data = [
     {
       id: "1",
@@ -135,6 +162,7 @@ export default function LogIn() {
           </TouchableOpacity>
         </View>
         <StatusBar barStyle="dark-content" />
+        <Toast />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

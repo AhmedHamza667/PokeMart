@@ -2,13 +2,18 @@ import { View, Text } from "react-native";
 import React from "react";
 import { Stack, useNavigation } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { store } from "../store/store";
+import { Provider } from 'react-redux'
+
 
 export default function _layout() {
   const navigation = useNavigation();
   return (
+    <Provider store={store}>
     <Stack
       screenOptions={{
         contentStyle: { backgroundColor: "#fff" },
+        headerTitleAlign: 'center',
       }}
     >
       <Stack.Screen
@@ -77,5 +82,6 @@ export default function _layout() {
         }}
       />
     </Stack>
+    </Provider>
   );
 }

@@ -4,10 +4,22 @@ import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useRouter } from "expo-router";
+import { useSelector, useDispatch } from 'react-redux'
+import { logout } from "../store/authReducer";
+import { RootState } from "../store/store";
+
 
 const CustomDrawerContent = (props) => {
-  const router = useRouter();
+  const firstName = useSelector((state : RootState) => state.auth.firstName)
+  const lastName = useSelector((state: RootState) => state.auth.lastName)
 
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const handleLogout = () =>{
+    dispatch(logout());
+    router.push("/LogIn");
+
+  }
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
       <View style={styles.header}>
@@ -16,7 +28,7 @@ const CustomDrawerContent = (props) => {
           style={styles.profileImage}
         />
         <View style={styles.topText}>
-          <Text style={styles.profileName}>Sean Johnson</Text>
+          <Text style={styles.profileName}>{firstName + ' ' + lastName}</Text>
           <TouchableOpacity
             onPress={() => props.navigation.navigate("userProfile")}
           >
@@ -50,7 +62,7 @@ const CustomDrawerContent = (props) => {
         <Text style={styles.versionText}>V 1.0</Text>
         <TouchableOpacity
           style={styles.logout}
-          onPress={() => router.push("/LogIn")}
+          onPress={handleLogout}
         >
           <Ionicons name="exit-outline" size={22} color="red" />
           <Text style={styles.logoutText}>Logout</Text>

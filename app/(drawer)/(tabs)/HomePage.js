@@ -5,9 +5,12 @@ import { ScrollView, StyleSheet,
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux'
 
 export default function HomePage() {
-  
+    const firstName = useSelector((state) => state.auth.firstName)
+    const lastName = useSelector((state) => state.auth.lastName)
+
     // mock data
     const data = [
         { id: '1', name: 'Teddy Bear', price: '$12', image: 'https://images.unsplash.com/photo-1562040506-a9b32cb51b94?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
@@ -32,12 +35,11 @@ export default function HomePage() {
           <Text style={styles.itemPrice}>{item.price}</Text>
         </View>
       );
-      
   return (
     <>
             <View style={styles.rest}>
                 <Text style={styles.helloMsg}>Hello,</Text>
-                <Text style={styles.userName}>Ahmed Hamza</Text>
+                <Text style={styles.userName}>{firstName + ' ' + lastName}</Text>
                 <FlatList 
                  numColumns={2}
                  data={data}

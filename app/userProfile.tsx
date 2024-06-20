@@ -3,10 +3,16 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { router } from "expo-router";
+import { RootState } from "../store/store";
+import { useSelector } from 'react-redux'
 
 const userProfile = () => {
   const [wishList, setWishList] = useState(12);
   const [cartItems, setCartItems] = useState(2);
+  const firstName = useSelector((state : RootState) => state.auth.firstName)
+  const lastName = useSelector((state: RootState) => state.auth.lastName)
+  const email = useSelector((state: RootState) => state.auth.email)
+
   return (
     <View style={styles.container}>
       <View style={styles.user}>
@@ -19,7 +25,7 @@ const userProfile = () => {
             <Ionicons name="camera" size={22} color="gray" />
           </View>
         </View>
-        <Text style={styles.userName}>Mary Johnson</Text>
+        <Text style={styles.userName}>{firstName + ' ' + lastName}</Text>
       </View>
       <View style={styles.middle}>
         <View style={styles.box}>
@@ -52,13 +58,13 @@ const userProfile = () => {
           <View style={styles.icon}>
             <Ionicons name="person-outline" size={18} color="black" />
           </View>
-          <Text>Mary Johnson</Text>
+          <Text>{firstName + ' ' + lastName}</Text>
         </View>
         <View style={styles.info}>
           <View style={styles.icon}>
             <Ionicons name="mail-outline" size={18} color="black" />
           </View>
-          <Text>MaryJohnson8789@gmail.com</Text>
+          <Text>{email}</Text>
         </View>
       </View>
     </View>
