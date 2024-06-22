@@ -5,8 +5,9 @@ import { useState } from "react";
 import { router } from "expo-router";
 import { RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { launchImageLibrary } from 'react-native-image-picker';
 import { updateProfilePicture } from '../store/authReducer'
+import * as ImagePicker from 'expo-image-picker';
+
 
 
 const userProfile = () => {
@@ -14,6 +15,7 @@ const userProfile = () => {
   const cartItems = useSelector((state: RootState) => state.cart.badge);
   const { firstName, lastName, email, profilePicture } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
+
 
   const handlePickImage = async () => {
     // Request permission to access media library
@@ -31,11 +33,15 @@ const userProfile = () => {
       quality: 1,
     });
 
-    if (!pickerResult.cancelled) {
-      const uri = pickerResult.uri;
+    if (!pickerResult.cancelled && pickerResult.assets && pickerResult.assets.length > 0) {
+      const uri = pickerResult.assets[0].uri;
+      console.log("Picked Image URI: ", uri); // Debug log
       dispatch(updateProfilePicture(uri));
+    } else {
+      console.log("Image Picker cancelled or no assets found");
     }
   };
+
 
 
   return (
