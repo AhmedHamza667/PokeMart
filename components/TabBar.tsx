@@ -1,9 +1,13 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from 'react-redux'
+import { RootState } from "../store/store";
+
 
 const TabBar = ({ state, descriptors, navigation }) => {
-  const badge = 2;
+  const badge = useSelector((state: RootState) => state.cart.badge);
+
   const icons = {
     HomePage: (isFocused) => (
       <Ionicons

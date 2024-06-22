@@ -12,6 +12,7 @@ import { RootState } from "../store/store";
 const CustomDrawerContent = (props) => {
   const firstName = useSelector((state : RootState) => state.auth.firstName)
   const lastName = useSelector((state: RootState) => state.auth.lastName)
+  const profilePicture = useSelector((state: RootState) => state.auth.profilePicture)
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const CustomDrawerContent = (props) => {
     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
       <View style={styles.header}>
         <Image
-          source={require("../assets/profileImg.png")}
+          source={profilePicture}
           style={styles.profileImage}
         />
         <View style={styles.topText}>

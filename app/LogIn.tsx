@@ -48,7 +48,7 @@ export default function LogIn() {
       });
       setTimeout(() => {
         router.push("/HomePage");
-      }, 2000);
+      }, 1000);
     }
     else {
       Toast.show({
@@ -56,7 +56,7 @@ export default function LogIn() {
         text1: 'Invalid email or password',
       });
     }
-  }, [isLoggedIn, router]);
+  }, [isLoggedIn]);
 
   const onSubmit = (data) => {
     const {email, password} = data;

@@ -4,45 +4,72 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { router } from "expo-router";
 import { RootState } from "../store/store";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
+import { launchImageLibrary } from 'react-native-image-picker';
+import { updateProfilePicture } from '../store/authReducer'
+
 
 const userProfile = () => {
   const [wishList, setWishList] = useState(12);
-  const [cartItems, setCartItems] = useState(2);
-  const firstName = useSelector((state : RootState) => state.auth.firstName)
-  const lastName = useSelector((state: RootState) => state.auth.lastName)
-  const email = useSelector((state: RootState) => state.auth.email)
+  const cartItems = useSelector((state: RootState) => state.cart.badge);
+  const { firstName, lastName, email, profilePicture } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+
+  const handlePickImage = async () => {
+    // Request permission to access media library
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this app to access your photos!");
+      return;
+    }
+
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!pickerResult.cancelled) {
+      const uri = pickerResult.uri;
+      dispatch(updateProfilePicture(uri));
+    }
+  };
+
 
   return (
     <View style={styles.container}>
       <View style={styles.user}>
         <View>
           <Image
-            source={require("../assets/MaryprofileImg.png")}
+            source={profilePicture}
             style={styles.profileImage}
           />
+          <Pressable onPress={handlePickImage}>
           <View style={styles.camera}>
             <Ionicons name="camera" size={22} color="gray" />
           </View>
+          </Pressable>
         </View>
-        <Text style={styles.userName}>{firstName + ' ' + lastName}</Text>
+        <Text style={styles.userName}>{firstName + " " + lastName}</Text>
       </View>
       <View style={styles.middle}>
         <View style={styles.box}>
-          <Ionicons name="heart" size={22} color="red" />
-          <Text style={styles.boxText}>Wishlist</Text>
-          <Text style={styles.boxNum}>{wishList}</Text>
           <Pressable>
+            <Ionicons name="heart" size={22} color="red" />
+            <Text style={styles.boxText}>Wishlist</Text>
+            <Text style={styles.boxNum}>{wishList}</Text>
             <View style={styles.arrow}>
               <Ionicons name="chevron-forward" size={20} color="gray" />
             </View>
           </Pressable>
         </View>
         <View style={styles.box}>
-          <Ionicons name="cart" size={22} color="black" />
-          <Text style={styles.boxText}>Cart</Text>
-          <Text style={styles.boxNum}>{cartItems}</Text>
           <Pressable onPress={() => router.push("/Cart")}>
+            <Ionicons name="cart" size={22} color="black" />
+            <Text style={styles.boxText}>Cart</Text>
+            <Text style={styles.boxNum}>{cartItems}</Text>
             <View style={styles.arrow}>
               <Ionicons name="chevron-forward" size={20} color="gray" />
             </View>
@@ -58,7 +85,7 @@ const userProfile = () => {
           <View style={styles.icon}>
             <Ionicons name="person-outline" size={18} color="black" />
           </View>
-          <Text>{firstName + ' ' + lastName}</Text>
+          <Text>{firstName + " " + lastName}</Text>
         </View>
         <View style={styles.info}>
           <View style={styles.icon}>

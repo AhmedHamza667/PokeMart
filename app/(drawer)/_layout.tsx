@@ -13,6 +13,7 @@ export default function _layout() {
         sceneContainerStyle: {
           backgroundColor: 'transparent',
         },
+        headerTitleAlign: 'center',
       }}
 >
         {/* <Drawer.Screen

@@ -7,15 +7,17 @@ export interface AuthState {
   lastName: string,
   email: string,
   password: string,
+  profilePicture: any,
   isLoggedIn: boolean
 
 }
 //initial state
 const initialState: AuthState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
+  firstName: 'Test',
+  lastName: 'User',
+  email: 'test@test.com',
+  password: '11111111',
+  profilePicture: require('../assets/profileImg.png'), 
   isLoggedIn: false
 
 }
@@ -38,11 +40,15 @@ export const authSlice = createSlice({
       logout: (state) => {
         state.isLoggedIn = false;
       },
+      updateProfilePicture: (state, action: PayloadAction<any>) => {
+        state.profilePicture = { uri: action.payload }; // Update profile picture
+      },
+  
     },
   })
   
   // Action creators are generated for each case reducer function
-  export const { signUp, login, logout } = authSlice.actions
+  export const { signUp, login, logout, updateProfilePicture } = authSlice.actions
   
   export default authSlice.reducer
   

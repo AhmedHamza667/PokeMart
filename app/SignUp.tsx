@@ -66,7 +66,7 @@ export default function SignUp() {
       });
         setTimeout(() => {
           router.push("/LogIn");
-        }, 2000);
+        }, 1000);
 
   };
   const router = useRouter();
