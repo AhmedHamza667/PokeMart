@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View, Modal, Button, KeyboardAvoidingView } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
@@ -7,6 +7,9 @@ import { RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { updateProfilePicture } from '../store/authReducer'
 import * as ImagePicker from 'expo-image-picker';
+import { TextInput } from "react-native-gesture-handler";
+import { updateUserDetails} from '../store/authReducer';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 
@@ -14,6 +17,10 @@ const userProfile = () => {
   const [wishList, setWishList] = useState(12);
   const cartItems = useSelector((state: RootState) => state.cart.badge);
   const { firstName, lastName, email, profilePicture } = useSelector((state: RootState) => state.auth);
+  const [editMode, setEditMode] = useState(false);
+  const [newFirstName, setNewFirstName] = useState(firstName);
+  const [newLastName, setNewLastName] = useState(lastName);
+  const [newEmail, setNewEmail] = useState(email);
   const dispatch = useDispatch();
 
 
@@ -42,10 +49,18 @@ const userProfile = () => {
     }
   };
 
-
+  const handleEditToggle = () => {
+    setEditMode(!editMode);
+  };
+  const handleSaveChanges = () => {
+    dispatch(updateUserDetails({newFirstName, newLastName, newEmail}));
+    setEditMode(false);
+  };
+  
 
   return (
-    <View style={styles.container}>
+<SafeAreaView style={styles.container} >
+<KeyboardAvoidingView behavior="position" keyboardVerticalOffset={100}>
       <View style={styles.user}>
         <View>
           <Image
@@ -82,10 +97,11 @@ const userProfile = () => {
           </Pressable>
         </View>
       </View>
-      <View style={styles.personal}>
-        <View style={styles.infoHeader}>
+      <View style={styles.personal}>{!editMode? (
+        <>
+         <View style={styles.infoHeader}>
           <Text style={styles.infoHeader}>Personal Information</Text>
-          <Text style={styles.edit}>Edit</Text>
+          <Text style={styles.edit} onPress={handleEditToggle}>Edit</Text>
         </View>
         <View style={[styles.info, styles.name]}>
           <View style={styles.icon}>
@@ -99,8 +115,47 @@ const userProfile = () => {
           </View>
           <Text>{email}</Text>
         </View>
+        </>
+      ) : 
+      <>
+          <View style={styles.infoHeader}>
+          <Text style={styles.infoHeader}>Personal Information</Text>
+          <Text style={styles.edit} onPress={handleEditToggle}>Cancel</Text>
+        </View>
+        <View style={[styles.info, styles.name]}>
+          <View style={styles.icon}>
+            <Ionicons name="person-outline" size={18} color="black" />
+          </View>
+          <TextInput
+            value={newFirstName}
+            onChangeText={setNewFirstName}
+            placeholder="First Name"
+          />
+          <TextInput
+            style={styles.textInputStyle}
+            value={newLastName}
+            onChangeText={setNewLastName}
+            placeholder="Last Name"
+          />
+          </View>
+        <View style={styles.info}>
+          <View style={styles.icon}>
+            <Ionicons name="mail-outline" size={18} color="black" />
+          </View>
+          <TextInput
+            value={newEmail}
+            onChangeText={setNewEmail}
+            placeholder="Email"
+          />
+          <Text style={[styles.edit, styles.save]} onPress={handleSaveChanges}>Save</Text>
+        </View>
+        </>}
+       
       </View>
-    </View>
+      </KeyboardAvoidingView>
+
+      </SafeAreaView>
+    
   );
 };
 
@@ -108,6 +163,7 @@ export default userProfile;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 26,
+    flex: 1,
   },
   user: {
     flexDirection: "column",
@@ -193,4 +249,12 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
+  save:{
+    position: "absolute",
+    right: 0,
+  },
+  textInputStyle: {
+    paddingLeft: 30,
+  }
+
 });

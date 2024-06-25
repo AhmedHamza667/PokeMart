@@ -175,11 +175,11 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 32,
-    fontFamily: "NexaBold",
+    fontFamily: "Nexa-Bold",
     marginBottom: 10,
   },
   intro: {
-    fontFamily: "NexaRegular",
+    fontFamily: "Nexa-Regular",
     fontSize: 14,
     paddingBottom: 10,
   },
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   submitBtnText: {
     color: "#fff",
     fontSize: 16,
-    fontFamily: "NexaBold",
+    fontFamily: "Nexa-Bold",
   },
   disabled: {
     opacity: 0.5,
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   createBtnTxt: {
     color: "#00388E",
     fontSize: 15,
-    fontFamily: "NexaBold",
+    fontFamily: "Nexa-Bold",
   },
   grid: {
     justifyContent: "center",

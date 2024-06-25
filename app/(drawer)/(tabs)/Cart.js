@@ -70,7 +70,7 @@ export default function Cart() {
   return (
     <>
       <FlatList
-        style={{ paddingTop: 20 }}
+        style={{ paddingVertical: 20, }}
         data={cart}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     margin: 10,
-    overflow: "hidden",
+    overflow: "scroll",
     flexDirection: "row",
     alignItems: "center",
   },
@@ -119,13 +119,13 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     fontWeight: "normal",
-    fontFamily: "NexaRegular",
+    fontFamily: "Nexa-Regular",
   },
   itemPrice: {
     fontSize: 14,
     color: "#05A20C",
     fontWeight: "bold",
-    fontFamily: "NexaBold",
+    fontFamily: "Nexa-Bold",
     paddingVertical: 7,
   },
   imageContainer: {
@@ -152,14 +152,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
-    fontFamily: "NexaRegular",
+    fontFamily: "Nexa-Regular",
   },
   footer: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
+    marginBottom: 80,
+    marginTop: 10
   },
   orderButton: {
     backgroundColor: "#00388E",
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 14,
     fontWeight: "bold",
-    fontFamily: "NexaRegular",
+    fontFamily: "Nexa-Regular",
   },
   total: {
     fontSize: 15,

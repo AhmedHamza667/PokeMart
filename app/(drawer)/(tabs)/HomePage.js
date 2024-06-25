@@ -5,13 +5,27 @@ import { StatusBar } from 'expo-status-bar';
 import { useSelector, useDispatch } from 'react-redux'
 import {addItemToCart} from '../../../store/cartReducer';
 import Toast from 'react-native-toast-message';
+import { useQuery, gql } from '@apollo/client';
 
+const PRODUCTS_QUERY = gql`
+  query GetProducts {
+    products {
+      id
+      name
+      price
+      image
+    }
+  }
+`;
 
 export default function HomePage() {
+  const { data, loading, error } = useQuery(PRODUCTS_QUERY);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
     const firstName = useSelector((state) => state.auth.firstName)
     const lastName = useSelector((state) => state.auth.lastName)
     const dispatch = useDispatch();
-    const data = useSelector((state) => state.items);
+    // const data = useSelector((state) => state.items);
     const handleAddToCart = (item) => {
       dispatch(addItemToCart({ ...item, quantity: 1 }));
       Toast.show({
@@ -42,7 +56,7 @@ export default function HomePage() {
                 <Text style={styles.userName}>{firstName + ' ' + lastName}</Text>
                 <FlatList 
                  numColumns={2}
-                 data={data}
+                 data={data.products}
                  renderItem={renderItem}
                  keyExtractor={item => item.id}
                  contentContainerStyle={styles.list}
@@ -67,13 +81,13 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     paddingTop: 10,
     paddingHorizontal: 10,
-    fontFamily: 'NexaLight',
+    fontFamily: 'Nexa-Light',
   },
   userName: {
     fontSize: 32,
     paddingBottom: 10,
     paddingHorizontal: 10,
-    fontFamily: 'NexaBold',
+    fontFamily: 'Nexa-Bold',
 
   },
   list: {
@@ -95,14 +109,14 @@ itemImage: {
   },
   itemName: {
     fontSize: 16,
-    fontFamily: 'NexaLight',
+    fontFamily: 'Nexa-Light',
     paddingTop: 5,
 
   },
   itemPrice: {
     fontSize: 14,
     paddingTop: 6,
-    fontFamily: 'NexaBold',
+    fontFamily: 'Nexa-Bold',
 
   },
   addButton: {
@@ -120,7 +134,7 @@ itemImage: {
   addButtonText: {
     color: '#fff',
     fontSize: 14,
-    fontFamily: 'NexaBold',
+    fontFamily: 'Nexa-Bold',
 
   },
   imageContainer: {

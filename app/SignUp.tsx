@@ -72,7 +72,7 @@ export default function SignUp() {
   const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView behavior="position" style={styles.container}>
+      <KeyboardAvoidingView behavior="position">
         <Text style={styles.header}>Enter your details</Text>
         <View style={styles.form}>
           <Text style={styles.text}>First Name</Text>
@@ -190,13 +190,13 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: Dimensions.get("window").width >= 393 ? 40 : 30,
-    fontFamily: "NexaRegular",
+    fontFamily: "Nexa-Regular",
     margin: 25,
     textAlign: "center",
   },
   text: {
     marginLeft: 10,
-    fontFamily: "NexaRegular",
+    fontFamily: "Nexa-Regular",
   },
   inputContainer: {
     flexDirection: "row",
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   submitBtnText: {
     color: "#fff",
     fontSize: 16,
-    fontFamily: "NexaBold",
+    fontFamily: "Nexa-Bold",
     textAlign: "center",
   },
   spacer: {
