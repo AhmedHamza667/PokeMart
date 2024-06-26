@@ -38,7 +38,7 @@ export default function Cart() {
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: item.image }} style={styles.itemImage} />
+        <Image source={{ uri: item.artwork }} style={styles.itemImage} />
         <View style={styles.quantitySelector}>
           <TouchableOpacity
             onPress={() => {
