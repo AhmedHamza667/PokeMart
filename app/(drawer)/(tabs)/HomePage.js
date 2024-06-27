@@ -84,7 +84,7 @@ export default function HomePage() {
     </View>
   );
 
-  if (data || !data) {
+  if (loading || !data) {
     return (
       <SkeletonPlaceholder borderRadius={4}>
         <LinearGradient style={{ flex: 1 }}>
