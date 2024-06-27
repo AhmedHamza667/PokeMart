@@ -1,11 +1,22 @@
-import { ScrollView, StyleSheet, 
-    Text, TouchableOpacity, View, 
-    FlatList, Image } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { useSelector, useDispatch } from 'react-redux'
-import {addItemToCart} from '../../../store/cartReducer';
-import Toast from 'react-native-toast-message';
-import { useQuery, gql } from '@apollo/client';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+  Image,
+  RefreshControl,
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { useSelector, useDispatch } from "react-redux";
+import { addItemToCart } from "../../../store/cartReducer";
+import Toast from "react-native-toast-message";
+import { useQuery, gql } from "@apollo/client";
+import { useRef, useState } from "react";
+import Skeleton from "@thevsstech/react-native-skeleton";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
 
 // const PRODUCTS_QUERY = gql`
 //   query GetProducts {
@@ -30,169 +41,210 @@ const GET_POKEMON_DETAILS = gql`
   }
 `;
 
-
-
 export default function HomePage() {
-    const firstName = useSelector((state) => state.auth.firstName)
-    const lastName = useSelector((state) => state.auth.lastName)
-    const dispatch = useDispatch();
-    // const data = useSelector((state) => state.items);
-    const handleAddToCart = (item) => {
-      dispatch(addItemToCart({ ...item, quantity: 1 }));
-      Toast.show({
-        type: 'success',
-        text1: 'Item added successfully',
-        visibilityTime: 800,
+  const firstName = useSelector((state) => state.auth.firstName);
+  const lastName = useSelector((state) => state.auth.lastName);
+  const dispatch = useDispatch();
+  const flatListRef = useRef(null); // Ref for FlatList component
 
-      });
-    };
-    const { data, loading, error, fetchMore } = useQuery(GET_POKEMON_DETAILS, {
-      variables: { limit: 10, offset: 0 }  });
+  const [refreshing, setRefreshing] = useState(false);
+
+  // const data = useSelector((state) => state.items);
+  const handleAddToCart = (item) => {
+    dispatch(addItemToCart({ ...item, quantity: 1 }));
+    Toast.show({
+      type: "success",
+      text1: "Item added successfully",
+      visibilityTime: 800,
+    });
+  };
+  const { data, loading, error, fetchMore, refetch } = useQuery(
+    GET_POKEMON_DETAILS,
+    {
+      variables: { limit: 10, offset: 0 },
+    }
+  );
   // const { data, loading, error } = useQuery(GET_POKEMON_DETAILS);
 
-  if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error: {error.message}</Text>;
-  if (!data || !data.pokemons || !data.pokemons.results) return <Text>No data found.</Text>;
-  
-    // render function
-    const renderItem = ({ item }) => (
-        <View style={styles.itemContainer}>
-          <View style={styles.imageContainer}>
-            <Image source={{ uri: item.artwork }} style={styles.itemImage} />
-            <TouchableOpacity style={styles.addButton} onPress={()=> handleAddToCart(item)} >
-                <Text style={styles.addButtonText}>Add to Cart</Text>
-            </TouchableOpacity>
+  // render function
+  const renderItem = ({ item }) => (
+    <View style={styles.itemContainer}>
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: item.artwork }} style={styles.itemImage} />
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => handleAddToCart(item)}
+        >
+          <Text style={styles.addButtonText}>Add to Cart</Text>
+        </TouchableOpacity>
+      </View>
+      <Text style={styles.itemName}>{item.name}</Text>
+      <Text style={styles.itemPrice}>{"$" + item.price}</Text>
+    </View>
+  );
+
+  if (data || !data) {
+    return (
+      <SkeletonPlaceholder borderRadius={4}>
+        <LinearGradient style={{ flex: 1 }}>
+          <View style={{ margin: 25 }}>
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+              <View style={{ marginHorizontal: 20 }}>
+                <Image
+                  style={{ width: 150, height: 150, borderRadius: 10 }}
+                  src={require("../../../assets/profileImg.png")}
+                />
+                <Text style={{ marginTop: 16, fontSize: 14, lineHeight: 18 }}>
+                  Hello world
+                </Text>
+                
+              </View>
+              <View style={{ marginHorizontal: 20 }}>
+                <Image
+                  style={{ width: 150, height: 150, borderRadius: 10 }}
+                  src={require("../../../assets/profileImg.png")}
+                />
+                <Text style={{ marginTop: 16, fontSize: 14, lineHeight: 18 }}>
+                  Hello world
+                </Text>
+              </View>
+            </View>
+            
           </View>
-          <Text style={styles.itemName}>{item.name}</Text>
-          <Text style={styles.itemPrice}>{'$'+item.price}</Text>
-        </View>
-      );
+        </LinearGradient>
+      </SkeletonPlaceholder>
+    );
+  }
 
-      const loadMore = () => {
-        fetchMore({
-          variables: {
-            offset: data.pokemons.results.length,
+  const loadMore = () => {
+    fetchMore({
+      variables: {
+        offset: data.pokemons.results.length,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return {
+          pokemons: {
+            ...fetchMoreResult.pokemons,
+            results: [
+              ...prev.pokemons.results,
+              ...fetchMoreResult.pokemons.results,
+            ],
           },
-          updateQuery: (prev, { fetchMoreResult }) => {
-            if (!fetchMoreResult) return prev;
-            return {
-              pokemons: {
-                ...fetchMoreResult.pokemons,
-                results: [...prev.pokemons.results, ...fetchMoreResult.pokemons.results],
-              },
-            };
-          },
-        });
-      };
-    
+        };
+      },
+    });
+  };
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refetch(); // Refresh the data
+    setRefreshing(false);
+  };
 
-      
   return (
     <>
-            <View style={styles.rest}>
-                <Text style={styles.helloMsg}>Hello,</Text>
-                <Text style={styles.userName}>{firstName + ' ' + lastName}</Text>
-                <FlatList 
-                 numColumns={2}
-                 data={data.pokemons.results}
-                 renderItem={renderItem}
-                 keyExtractor={item => item.id}
-                 contentContainerStyle={styles.list}
-                 ListFooterComponent={() => 
-                  <TouchableOpacity style={styles.more} onPress={loadMore}>
-                  <Text style={styles.addButtonText}>Load More...</Text>
-                  </TouchableOpacity>} 
-                />
-                
-            </View>
-            {/* <BottonNav /> */}
-            <Toast />
-            <StatusBar style='light'/>
-        </>
+      <View style={styles.rest}>
+        <Text style={styles.helloMsg}>Hello,</Text>
+        <Text style={styles.userName}>{firstName + " " + lastName}</Text>
+        <FlatList
+          numColumns={2}
+          data={data.pokemons.results}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.list}
+          ListFooterComponent={() => (
+            <TouchableOpacity style={styles.more} onPress={loadMore}>
+              <Text style={styles.addButtonText}>Load More...</Text>
+            </TouchableOpacity>
+          )}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        />
+      </View>
+      {/* <BottonNav /> */}
+      <Toast />
+      <StatusBar style="light" />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   rest: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     flex: 1,
     marginBottom: 60,
-    justifyContent: 'center',
-},
-  
+    justifyContent: "center",
+  },
+
   helloMsg: {
     fontSize: 32,
-    fontWeight: '300',
+    fontWeight: "300",
     paddingTop: 10,
     paddingHorizontal: 10,
-    fontFamily: 'Nexa-Light',
+    fontFamily: "Nexa-Light",
   },
   userName: {
     fontSize: 32,
     paddingBottom: 10,
     paddingHorizontal: 10,
-    fontFamily: 'Nexa-Bold',
-
+    fontFamily: "Nexa-Bold",
   },
   list: {
     paddingHorizontal: 10,
-    
   },
   itemContainer: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: "column",
     margin: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
-itemImage: {
-    width: '100%',
+  itemImage: {
+    width: "100%",
     height: 150,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   itemName: {
     fontSize: 16,
-    fontFamily: 'Nexa-Light',
+    fontFamily: "Nexa-Light",
     paddingTop: 5,
-
   },
   itemPrice: {
     fontSize: 14,
     paddingTop: 6,
-    fontFamily: 'Nexa-Bold',
-
+    fontFamily: "Nexa-Bold",
   },
   addButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 10,
-    left: '50%',
-    transform: [{translateX: -90}],
-    backgroundColor: '#28a745',
+    left: "50%",
+    transform: [{ translateX: -90 }],
+    backgroundColor: "#28a745",
     paddingVertical: 10,
     marginHorizontal: 20,
     borderRadius: 10,
-    alignItems: 'center',
-    width: '55%'
+    alignItems: "center",
+    width: "55%",
   },
   addButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 14,
-    fontFamily: 'Nexa-Bold',
-
+    fontFamily: "Nexa-Bold",
   },
   imageContainer: {
-    position: 'relative',
+    position: "relative",
   },
-  more:{
-    backgroundColor: '#28a745',
-    paddingVertical: 10,
+  more: {
+    backgroundColor: "#28a745",
+    paddingVertical: 5,
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '30%',
+    alignItems: "center",
+    justifyContent: "center",
+    width: "30%",
     marginBottom: 20,
-    alignSelf: 'center',
-  }
-
+    alignSelf: "center",
+  },
 });
