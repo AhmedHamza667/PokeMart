@@ -1,11 +1,26 @@
-import { ApolloClient, HttpLink, InMemoryCache, gql } from '@apollo/client';
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 
-// Initialize Apollo Client with an InMemory Cache
-const client = new ApolloClient({
+// Apollo Client for Pokémon API
+const pokemonClient = new ApolloClient({
   link: new HttpLink({
     uri: 'https://graphql-pokeapi.graphcdn.app/', // Pokémon API endpoint
   }),
   cache: new InMemoryCache(),
 });
 
-export default client;
+// Apollo Client for Login/Authentication API
+const authClient = new ApolloClient({
+  link: new HttpLink({
+    uri: 'https://api-dev.virrow.com/app-main', // Replace with your authentication API endpoint
+  }),
+  cache: new InMemoryCache(),
+});
+
+export { pokemonClient, authClient };
+
+
+
+// const clients = {
+//   "pokemon": new HttpLink({ uri: 'https://graphql-pokeapi.graphcdn.app/'}),
+//   "auth": new HttpLink({uri: 'https://api-dev.virrow.com/app-main' })
+// }

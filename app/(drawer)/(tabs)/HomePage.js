@@ -17,6 +17,7 @@ import { useRef, useState } from "react";
 import Skeleton from "@thevsstech/react-native-skeleton";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { authClient, pokemonClient } from "../../../apollo";
 
 // const PRODUCTS_QUERY = gql`
 //   query GetProducts {
@@ -40,7 +41,6 @@ const GET_POKEMON_DETAILS = gql`
     }
   }
 `;
-
 export default function HomePage() {
   const firstName = useSelector((state) => state.auth.firstName);
   const lastName = useSelector((state) => state.auth.lastName);
@@ -62,6 +62,8 @@ export default function HomePage() {
     GET_POKEMON_DETAILS,
     {
       variables: { limit: 10, offset: 0 },
+      client: pokemonClient, // Specify the client here
+
     }
   );
   // const { data, loading, error } = useQuery(GET_POKEMON_DETAILS);
