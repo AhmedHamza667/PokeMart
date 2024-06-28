@@ -21,10 +21,10 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
-import { login } from "../store/authReducer";
+import { login, updateUserDetails } from "../store/authReducer";
 import { RootState } from "../store/store";
 import { useEffect } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { authClient } from "../apollo";
 export default function LogIn() {
 
@@ -80,6 +80,20 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
   //   const {email, password} = data;
   //   dispatch(login({email, password}))
   // };
+
+  const GET_CURRENT_USER = gql`
+  query {
+    getCurrentUser {
+      address
+      countryCode
+      firstName
+      isActive
+      isVerified
+      lastName
+    }
+  }
+`;
+
   const onSubmit = async (data) => {
     const {email, password} = data;
     try {
@@ -97,7 +111,16 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
         type: 'success',
         text1: 'Login Successful',
       });
-      setTimeout(() => {
+      setTimeout(async () => {
+        const { data: userData } = await authClient.query({
+          query: GET_CURRENT_USER,
+          context: {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        });
+        dispatch(updateUserDetails(userData.getCurrentUser));
         router.push("/HomePage");
       }, 1000);
 

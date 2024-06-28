@@ -1,5 +1,4 @@
 import {
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -17,8 +16,6 @@ import { useEffect, useRef, useState } from "react";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { authClient, pokemonClient } from "../../../apollo";
-import * as SecureStore from 'expo-secure-store';
-import { updateUserDetails } from "../../../store/authReducer";
 
 const GET_POKEMON_DETAILS = gql`
   query GetPokemons($limit: Int!, $offset: Int!) {
@@ -33,60 +30,12 @@ const GET_POKEMON_DETAILS = gql`
   }
 `;
 
-const GET_CURRENT_USER = gql`
-  query {
-    getCurrentUser {
-      address
-      countryCode
-      firstName
-      isActive
-      isVerified
-      lastName
-    }
-  }
-`;
 
 export default function HomePage() {
   const firstName = useSelector((state) => state.auth.firstName);
   const lastName = useSelector((state) => state.auth.lastName);
   const [token, setToken] = useState(null);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchToken = async () => {
-      const storedToken = await SecureStore.getItemAsync('token');
-      setToken(storedToken);
-    };
-
-    fetchToken();
-  }, []);
-
-  const { loading: userLoading, error: userError, data: userData } = useQuery(GET_CURRENT_USER, {
-    client: authClient,
-    context: {
-      headers: {
-        Authorization: token ? `Bearer ${token}` : '',
-      },
-    },
-    skip: !token, // Skip query execution until token is fetched
-  });
-  useEffect(() => {
-    if (userLoading) {
-      console.log('Loading user profile...');
-    }
-    if (userError) {
-      console.error('Error loading user profile:', userError);
-    }
-    if (userData) {
-      console.log('User profile data:', userData.getCurrentUser);
-      const { firstName, lastName } = userData.getCurrentUser;
-      dispatch(updateUserDetails(userData.getCurrentUser));
-
-    }
-  }, [userLoading, userError, userData]);
-
-  // const firstName = useSelector((state) => state.auth.firstName);
-  // const lastName = useSelector((state) => state.auth.lastName);
 
   const [refreshing, setRefreshing] = useState(false);
 
