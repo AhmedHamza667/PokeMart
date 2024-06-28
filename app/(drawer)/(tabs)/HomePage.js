@@ -13,22 +13,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart } from "../../../store/cartReducer";
 import Toast from "react-native-toast-message";
 import { useQuery, gql } from "@apollo/client";
-import { useRef, useState } from "react";
-import Skeleton from "@thevsstech/react-native-skeleton";
+import { useEffect, useRef, useState } from "react";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { authClient, pokemonClient } from "../../../apollo";
+import * as SecureStore from 'expo-secure-store';
+import { updateUserDetails } from "../../../store/authReducer";
 
-// const PRODUCTS_QUERY = gql`
-//   query GetProducts {
-//     products {
-//       id
-//       name
-//       price
-//       image
-//     }
-//   }
-// `;
 const GET_POKEMON_DETAILS = gql`
   query GetPokemons($limit: Int!, $offset: Int!) {
     pokemons(limit: $limit, offset: $offset) {
@@ -41,15 +32,64 @@ const GET_POKEMON_DETAILS = gql`
     }
   }
 `;
+
+const GET_CURRENT_USER = gql`
+  query {
+    getCurrentUser {
+      address
+      countryCode
+      firstName
+      isActive
+      isVerified
+      lastName
+    }
+  }
+`;
+
 export default function HomePage() {
   const firstName = useSelector((state) => state.auth.firstName);
   const lastName = useSelector((state) => state.auth.lastName);
+  const [token, setToken] = useState(null);
   const dispatch = useDispatch();
-  const flatListRef = useRef(null); // Ref for FlatList component
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const storedToken = await SecureStore.getItemAsync('token');
+      setToken(storedToken);
+    };
+
+    fetchToken();
+  }, []);
+
+  const { loading: userLoading, error: userError, data: userData } = useQuery(GET_CURRENT_USER, {
+    client: authClient,
+    context: {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+    },
+    skip: !token, // Skip query execution until token is fetched
+  });
+  useEffect(() => {
+    if (userLoading) {
+      console.log('Loading user profile...');
+    }
+    if (userError) {
+      console.error('Error loading user profile:', userError);
+    }
+    if (userData) {
+      console.log('User profile data:', userData.getCurrentUser);
+      const { firstName, lastName } = userData.getCurrentUser;
+      dispatch(updateUserDetails(userData.getCurrentUser));
+
+    }
+  }, [userLoading, userError, userData]);
+
+  // const firstName = useSelector((state) => state.auth.firstName);
+  // const lastName = useSelector((state) => state.auth.lastName);
 
   const [refreshing, setRefreshing] = useState(false);
 
-  // const data = useSelector((state) => state.items);
   const handleAddToCart = (item) => {
     dispatch(addItemToCart({ ...item, quantity: 1 }));
     Toast.show({
@@ -58,18 +98,16 @@ export default function HomePage() {
       visibilityTime: 800,
     });
   };
+
   const { data, loading, error, fetchMore, refetch } = useQuery(
     GET_POKEMON_DETAILS,
     {
       variables: { limit: 10, offset: 0 },
       client: pokemonClient, // Specify the client here
-
     }
   );
-  // const { data, loading, error } = useQuery(GET_POKEMON_DETAILS);
 
   if (error) return <Text>Error: {error.message}</Text>;
-  // render function
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
       <View style={styles.imageContainer}>
@@ -100,7 +138,6 @@ export default function HomePage() {
                 <Text style={{ marginTop: 16, fontSize: 14, lineHeight: 18 }}>
                   Hello world
                 </Text>
-                
               </View>
               <View style={{ marginHorizontal: 20 }}>
                 <Image
@@ -112,7 +149,6 @@ export default function HomePage() {
                 </Text>
               </View>
             </View>
-            
           </View>
         </LinearGradient>
       </SkeletonPlaceholder>
@@ -138,6 +174,7 @@ export default function HomePage() {
       },
     });
   };
+
   const onRefresh = async () => {
     setRefreshing(true);
     await refetch(); // Refresh the data
@@ -165,7 +202,6 @@ export default function HomePage() {
           }
         />
       </View>
-      {/* <BottonNav /> */}
       <Toast />
       <StatusBar style="light" />
     </>
@@ -179,7 +215,6 @@ const styles = StyleSheet.create({
     marginBottom: 60,
     justifyContent: "center",
   },
-
   helloMsg: {
     fontSize: 32,
     fontWeight: "300",

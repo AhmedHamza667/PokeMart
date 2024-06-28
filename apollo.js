@@ -20,7 +20,3 @@ export { pokemonClient, authClient };
 
 
 
-// const clients = {
-//   "pokemon": new HttpLink({ uri: 'https://graphql-pokeapi.graphcdn.app/'}),
-//   "auth": new HttpLink({uri: 'https://api-dev.virrow.com/app-main' })
-// }

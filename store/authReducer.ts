@@ -13,8 +13,8 @@ export interface AuthState {
 }
 //initial state
 const initialState: AuthState = {
-  firstName: 'Test',
-  lastName: 'User',
+  firstName: 'Loading',
+  lastName: 'User...',
   email: 'test@test.com',
   password: '11111111',
   profilePicture: require('../assets/profileImg.png'), 
@@ -44,10 +44,18 @@ export const authSlice = createSlice({
         state.profilePicture = { uri: action.payload }; // Update profile picture
       },
       updateUserDetails: (state, action) => {
-        const{newFirstName, newLastName, newEmail} = action.payload;
-        state.firstName = action.payload.newFirstName;
-        state.lastName = action.payload.newLastName;
-        state.email = action.payload.newEmail;
+        if(action.payload.newFirstName){
+          state.firstName = action.payload.newFirstName;
+        }
+        if(action.payload.newLastName){
+          state.lastName = action.payload.newLastName;
+        }
+        if(action.payload.newEmail){
+          state.email = action.payload.newEmail;
+        }
+        else{
+          return { ...state, ...action.payload };
+        }
       },
   
     },

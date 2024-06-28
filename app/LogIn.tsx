@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "../components/formInput";
 import { useSelector, useDispatch } from 'react-redux'
 import Toast from 'react-native-toast-message';
+import * as SecureStore from 'expo-secure-store';
 
 import {
   FlatList,
@@ -23,14 +24,31 @@ import { Controller, useForm } from "react-hook-form";
 import { login } from "../store/authReducer";
 import { RootState } from "../store/store";
 import { useEffect } from "react";
+import { gql, useMutation } from "@apollo/client";
+import { authClient } from "../apollo";
 export default function LogIn() {
+
+
+const LOGIN_MUTATION = gql`
+mutation Login($email: EmailPhone!, $password: Password!, $deviceId: String) {
+  login(emailOrPhoneNumber: $email, password: $password, deviceId: $deviceId) {
+    accessToken
+  }
+}
+`;
+
+const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,{
+  client: authClient});
+
+
+
   const dispatch = useDispatch()
   const router = useRouter();
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   const formSchema = z.object({
-    email: z.string().email("Please enter a valid email"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    email: z.string().min(10, "email must be at least 10 characters"),
+    password: z.string().min(4, "Password must be at least 4 characters"),
   });
   const { control, handleSubmit, formState, setFocus, register } = useForm({
     defaultValues: {
@@ -40,8 +58,41 @@ export default function LogIn() {
     resolver: zodResolver(formSchema),
   });
   const { isValid, errors } = formState;
-  useEffect(() => {
-    if (isLoggedIn) {
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     Toast.show({
+  //       type: 'success',
+  //       text1: 'Login Successful',
+  //     });
+  //     setTimeout(() => {
+  //       router.push("/HomePage");
+  //     }, 1000);
+  //   }
+  //   else {
+  //     Toast.show({
+  //       type: 'error',
+  //       text1: 'Invalid email or password',
+  //     });
+  //   }
+  // }, [isLoggedIn]);
+
+  // const onSubmit = (data) => {
+  //   const {email, password} = data;
+  //   dispatch(login({email, password}))
+  // };
+  const onSubmit = async (data) => {
+    const {email, password} = data;
+    try {
+      const response = await login({
+        variables: {
+          email,
+          password,
+          deviceId: '33B84027-FD24-493E-9120-2D3843A0CE9A'
+        },
+      });
+      const token = response.data.login.accessToken
+      console.log(token); // Handle successful login response
+      await SecureStore.setItemAsync("token", token);
       Toast.show({
         type: 'success',
         text1: 'Login Successful',
@@ -49,18 +100,14 @@ export default function LogIn() {
       setTimeout(() => {
         router.push("/HomePage");
       }, 1000);
-    }
-    else {
+
+    } catch (error) {
       Toast.show({
         type: 'error',
         text1: 'Invalid email or password',
       });
+      console.error('Login error:', error);
     }
-  }, [isLoggedIn]);
-
-  const onSubmit = (data) => {
-    const {email, password} = data;
-    dispatch(login({email, password}))
   };
   const data = [
     {
@@ -89,7 +136,6 @@ export default function LogIn() {
         "https://images.unsplash.com/photo-1702310636300-5b8103970683?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
   ];
-
   const renderItem = ({ item }) => (
     <View
       style={[

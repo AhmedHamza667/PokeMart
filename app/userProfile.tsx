@@ -23,7 +23,6 @@ const userProfile = () => {
   const [newEmail, setNewEmail] = useState(email);
   const dispatch = useDispatch();
 
-
   const handlePickImage = async () => {
     // Request permission to access media library
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -53,8 +52,12 @@ const userProfile = () => {
     setEditMode(!editMode);
   };
   const handleSaveChanges = () => {
-    dispatch(updateUserDetails({newFirstName, newLastName, newEmail}));
-    setEditMode(false);
+    dispatch(updateUserDetails({
+      newFirstName: newFirstName, 
+      newLastName: newLastName, 
+      newEmail: newEmail, 
+    }));
+        setEditMode(false);
   };
   
 
