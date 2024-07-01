@@ -90,6 +90,7 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
       isActive
       isVerified
       lastName
+      email
     }
   }
 `;
@@ -121,6 +122,7 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
           },
         });
         dispatch(updateUserDetails(userData.getCurrentUser));
+
         router.push("/HomePage");
       }, 1000);
 

@@ -7,6 +7,7 @@ import { useRouter } from "expo-router";
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from "../store/authReducer";
 import { RootState } from "../store/store";
+import * as SecureStore from 'expo-secure-store';
 
 
 const CustomDrawerContent = (props) => {
@@ -16,10 +17,10 @@ const CustomDrawerContent = (props) => {
 
   const router = useRouter();
   const dispatch = useDispatch();
-  const handleLogout = () =>{
+  const handleLogout = async () =>{
     dispatch(logout());
+    await SecureStore.deleteItemAsync("token");
     router.push("/LogIn");
-
   }
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
