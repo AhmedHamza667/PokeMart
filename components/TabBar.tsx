@@ -3,9 +3,12 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from 'react-redux'
 import { RootState } from "../store/store";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from '../theme';
 
 
 const TabBar = ({ state, descriptors, navigation }) => {
+  const theme = useTheme<Theme>();
   const badge = useSelector((state: RootState) => state.cart.badge);
 
   const icons = {
@@ -13,20 +16,20 @@ const TabBar = ({ state, descriptors, navigation }) => {
       <Ionicons
         name={isFocused ? "home" : "home-outline"}
         size={24}
-        color="black"
+        color={theme.colors.text}
       />
     ),
     Cart: (isFocused) => (
       <Ionicons
         name={isFocused ? "cart" : "cart-outline"}
         size={24}
-        color="black"
+        color={theme.colors.text}
       />
     ),
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -71,7 +74,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
             <View style={styles.left}>
               {icons[route.name](isFocused)}
 
-              <Text style={styles.buttonText}>{label}</Text>
+              <Text style={[styles.buttonText,{ color: theme.colors.text}]}>{label}</Text>
               {isFocused && route.name == "Cart" && (
                 <View style={styles.badge}>
                   <Text style={styles.badgeText}>{badge}</Text>

@@ -10,6 +10,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { TextInput } from "react-native-gesture-handler";
 import { updateUserDetails} from '../store/authReducer';
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from '../theme';
 
 
 
@@ -59,11 +61,12 @@ const userProfile = () => {
     }));
         setEditMode(false);
   };
-  
+  const theme = useTheme<Theme>();
+
 
   return (
-<SafeAreaView style={styles.container} >
-<KeyboardAvoidingView behavior="position" keyboardVerticalOffset={100}>
+<SafeAreaView style={[styles.container, {backgroundColor: theme.colors.background}]} >
+<KeyboardAvoidingView behavior="position" keyboardVerticalOffset={100} style={{marginHorizontal: 26}}>
       <View style={styles.user}>
         <View>
           <Image
@@ -76,7 +79,7 @@ const userProfile = () => {
           </View>
           </Pressable>
         </View>
-        <Text style={styles.userName}>{firstName + " " + lastName}</Text>
+        <Text style={[styles.userName, { color: theme.colors.text }]}>{firstName + " " + lastName}</Text>
       </View>
       <View style={styles.middle}>
         <View style={styles.box}>
@@ -103,39 +106,40 @@ const userProfile = () => {
       <View style={styles.personal}>{!editMode? (
         <>
          <View style={styles.infoHeader}>
-          <Text style={styles.infoHeader}>Personal Information</Text>
+          <Text style={[styles.infoHeader, { color: theme.colors.text }]}>Personal Information</Text>
           <Text style={styles.edit} onPress={handleEditToggle}>Edit</Text>
         </View>
         <View style={[styles.info, styles.name]}>
           <View style={styles.icon}>
-            <Ionicons name="person-outline" size={18} color="black" />
+            <Ionicons name="person-outline" size={18} color={theme.colors.text} />
           </View>
-          <Text>{firstName + " " + lastName}</Text>
+          <Text style={{ color: theme.colors.text }}>{firstName + " " + lastName}</Text>
         </View>
         <View style={styles.info}>
           <View style={styles.icon}>
-            <Ionicons name="mail-outline" size={18} color="black" />
+            <Ionicons name="mail-outline" size={18} color={theme.colors.text} />
           </View>
-          <Text>{email}</Text>
+          <Text style={{ color: theme.colors.text }}>{email}</Text>
         </View>
         </>
       ) : 
       <>
           <View style={styles.infoHeader}>
-          <Text style={styles.infoHeader}>Personal Information</Text>
-          <Text style={styles.edit} onPress={handleEditToggle}>Cancel</Text>
+          <Text style={[styles.infoHeader,  { color: theme.colors.text }]}>Personal Information</Text>
+          <Text style={[styles.edit]} onPress={handleEditToggle}>Cancel</Text>
         </View>
         <View style={[styles.info, styles.name]}>
           <View style={styles.icon}>
-            <Ionicons name="person-outline" size={18} color="black" />
+            <Ionicons name="person-outline" size={18} color={theme.colors.text} />
           </View>
           <TextInput
+            style={ { color: theme.colors.text }}
             value={newFirstName}
             onChangeText={setNewFirstName}
             placeholder="First Name"
           />
           <TextInput
-            style={styles.textInputStyle}
+            style={[styles.textInputStyle,  { color: theme.colors.text }]}
             value={newLastName}
             onChangeText={setNewLastName}
             placeholder="Last Name"
@@ -143,9 +147,10 @@ const userProfile = () => {
           </View>
         <View style={styles.info}>
           <View style={styles.icon}>
-            <Ionicons name="mail-outline" size={18} color="black" />
+            <Ionicons name="mail-outline" size={18} color={theme.colors.text} />
           </View>
           <TextInput
+            style={ { color: theme.colors.text }}
             value={newEmail}
             onChangeText={setNewEmail}
             placeholder="Email"
@@ -165,7 +170,6 @@ const userProfile = () => {
 export default userProfile;
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 26,
     flex: 1,
   },
   user: {

@@ -16,6 +16,8 @@ import { useEffect, useRef, useState } from "react";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { authClient, pokemonClient } from "../../../apollo";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from '../../../theme';
 
 const GET_POKEMON_DETAILS = gql`
   query GetPokemons($limit: Int!, $offset: Int!) {
@@ -58,7 +60,7 @@ export default function HomePage() {
 
   if (error) return <Text>Error: {error.message}</Text>;
   const renderItem = ({ item }) => (
-    <View style={styles.itemContainer}>
+    <View style={[styles.itemContainer, {backgroundColor: theme.colors.background}]}>
       <View style={styles.imageContainer}>
         <Image source={{ uri: item.artwork }} style={styles.itemImage} />
         <TouchableOpacity
@@ -68,16 +70,17 @@ export default function HomePage() {
           <Text style={styles.addButtonText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.itemName}>{item.name}</Text>
-      <Text style={styles.itemPrice}>{"$" + item.price}</Text>
+      <Text style={[styles.itemName, {color: theme.colors.text}]}>{item.name}</Text>
+      <Text style={[styles.itemPrice, {color: theme.colors.text}]}>{"$" + item.price}</Text>
     </View>
   );
+  const theme = useTheme<Theme>();
 
   if (loading || !data) {
     return (
       <SkeletonPlaceholder borderRadius={4}>
         <LinearGradient style={{ flex: 1 }}>
-          <View style={{ margin: 25 }}>
+          <View style={{ margin: 25, backgroundColor: theme.colors.background}}>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <View style={{ marginHorizontal: 20 }}>
                 <Image
@@ -132,9 +135,9 @@ export default function HomePage() {
 
   return (
     <>
-      <View style={styles.rest}>
-        <Text style={styles.helloMsg}>Hello,</Text>
-        <Text style={styles.userName}>{firstName + " " + lastName}</Text>
+      <View style={[styles.rest, {backgroundColor: theme.colors.background}]}>
+        <Text style={[styles.helloMsg, {color: theme.colors.text}]}>Hello,</Text>
+        <Text style={[styles.userName, {color: theme.colors.text}]}>{firstName + " " + lastName}</Text>
         <FlatList
           numColumns={2}
           data={data.pokemons.results}
@@ -161,7 +164,6 @@ const styles = StyleSheet.create({
   rest: {
     backgroundColor: "white",
     flex: 1,
-    marginBottom: 60,
     justifyContent: "center",
   },
   helloMsg: {
@@ -179,6 +181,8 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingHorizontal: 10,
+    paddingBottom: 60,
+
   },
   itemContainer: {
     flex: 1,

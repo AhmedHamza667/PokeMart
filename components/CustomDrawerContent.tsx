@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout } from "../store/authReducer";
 import { RootState } from "../store/store";
 import * as SecureStore from 'expo-secure-store';
+import { useTheme } from "@shopify/restyle";
+import { Theme } from '../theme';
 
 
 const CustomDrawerContent = (props) => {
@@ -22,15 +24,17 @@ const CustomDrawerContent = (props) => {
     await SecureStore.deleteItemAsync("token");
     router.push("/LogIn");
   }
+  const theme = useTheme<Theme>();
+
   return (
-    <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
+    <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1, backgroundColor: theme.colors.background}}>
       <View style={styles.header}>
         <Image
           source={profilePicture}
           style={styles.profileImage}
         />
         <View style={styles.topText}>
-          <Text style={styles.profileName}>{firstName + ' ' + lastName}</Text>
+          <Text style={[[styles.profileName, {color: theme.colors.text}]]}>{firstName + ' ' + lastName}</Text>
           <TouchableOpacity
             onPress={() => props.navigation.navigate("userProfile")}
           >
@@ -42,26 +46,26 @@ const CustomDrawerContent = (props) => {
         <DrawerItem
           label="About Us"
           onPress={() => props.navigation.navigate("aboutUs")}
-          labelStyle={styles.drawerLabel}
+          labelStyle={[styles.drawerLabel, {color: theme.colors.text}]}
         />
         <DrawerItem
           label="FAQ"
           onPress={() => props.navigation.navigate("faq")}
-          labelStyle={styles.drawerLabel}
+          labelStyle={[styles.drawerLabel, {color: theme.colors.text}]}
         />
         <DrawerItem
           label="Terms & Conditions"
           onPress={() => props.navigation.navigate("terms")}
-          labelStyle={styles.drawerLabel}
+          labelStyle={[styles.drawerLabel, {color: theme.colors.text}]}
         />
         <DrawerItem
           label="Privacy Policy"
           onPress={() => props.navigation.navigate("privacy")}
-          labelStyle={styles.drawerLabel}
+          labelStyle={[styles.drawerLabel, {color: theme.colors.text}]}
         />
       </View>
       <View style={styles.footer}>
-        <Text style={styles.versionText}>V 1.0</Text>
+        <Text style={[styles.versionText, {color: theme.colors.text}]}>V 1.0</Text>
         <TouchableOpacity
           style={styles.logout}
           onPress={handleLogout}

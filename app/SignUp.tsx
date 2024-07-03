@@ -8,6 +8,7 @@ import CustomCheckbox from "../components/CustomCheckBox";
 import { useSelector, useDispatch } from 'react-redux'
 import { signUp } from "../store/authReducer";
 import Toast from 'react-native-toast-message';
+import { Theme } from '../theme';
 
 
 import {
@@ -22,6 +23,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
+import { useTheme } from "@shopify/restyle";
 
 export default function SignUp() {
   const dispatch = useDispatch()
@@ -70,12 +72,14 @@ export default function SignUp() {
 
   };
   const router = useRouter();
+  const theme = useTheme<Theme>();
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, {backgroundColor: theme.colors.background}]}>
       <KeyboardAvoidingView behavior="position">
-        <Text style={styles.header}>Enter your details</Text>
+        <Text style={[styles.header, {color: theme.colors.text}]}>Enter your details</Text>
         <View style={styles.form}>
-          <Text style={styles.text}>First Name</Text>
+          <Text style={[styles.text, {color: theme.colors.text}]}>First Name</Text>
           <FormInput
             control={control}
             name={"firstName"}
@@ -87,7 +91,7 @@ export default function SignUp() {
             <Text style={styles.errorText}>{errors.firstName.message}</Text>
           )}
 
-          <Text style={styles.text}>Last Name</Text>
+          <Text style={[styles.text, {color: theme.colors.text}]}>Last Name</Text>
           <FormInput
             control={control}
             name={"lastName"}
@@ -99,7 +103,7 @@ export default function SignUp() {
             <Text style={styles.errorText}>{errors.lastName.message}</Text>
           )}
 
-          <Text style={styles.text}>Enter Email</Text>
+          <Text style={[styles.text, {color: theme.colors.text}]}>Enter Email</Text>
           <FormInput
             control={control}
             name={"email"}
@@ -112,7 +116,7 @@ export default function SignUp() {
             <Text style={styles.errorText}>{errors.email.message}</Text>
           )}
 
-          <Text style={styles.text}>Password</Text>
+          <Text style={[styles.text, {color: theme.colors.text}]}>Password</Text>
           <View style={styles.inputContainer}>
             <FormInput
               control={control}
@@ -136,7 +140,7 @@ export default function SignUp() {
             <Text style={styles.errorText}>{errors.password.message}</Text>
           )}
 
-          <Text style={styles.text}>Confirm Password</Text>
+          <Text style={[styles.text, {color: theme.colors.text}]}>Confirm Password</Text>
           <View style={styles.inputContainer}>
             <FormInput
               control={control}
@@ -184,6 +188,7 @@ export default function SignUp() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
+    flex: 1
   },
   form: {
     marginHorizontal: 8,

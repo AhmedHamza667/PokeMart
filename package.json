@@ -15,6 +15,7 @@
     "@react-navigation/drawer": "^6.6.15",
     "@react-navigation/stack": "^6.3.29",
     "@reduxjs/toolkit": "^2.2.5",
+    "@shopify/restyle": "^2.4.4",
     "@thevsstech/react-native-skeleton": "^2.0.11",
     "@types/react": "~18.2.79",
     "expo": "~51.0.10",

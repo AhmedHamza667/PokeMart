@@ -1,28 +1,27 @@
-import { Text } from 'react-native';
-import React, { Component } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Tabs } from 'expo-router';
+// ExampleComponent.js
+import React from 'react';
+import { Text, Box } from '@shopify/restyle';
+import { useTheme } from '@shopify/restyle';
 
-export class Test extends Component {
-  render() {
-    return (
-      <SafeAreaView
-        style={{ backgroundColor: 'red', flex: 1 }}
-      >
-        {/* <Tabs>
-          <Tabs.Screen 
-          options={{
-            title: 'cart',
-            headerTitle: 'cart' ,
-            backgroundColor: 'red',
-            flex: 1,
-        }}
-          name='cart' />
-        </Tabs> */}
-        <Text>Test</Text>
-      </SafeAreaView>
-    );
-  }
-}
+const Test = () => {
+  const theme = useTheme();
+
+  return (
+    <Box
+      flex={1}
+      backgroundColor="background"
+      padding="md"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Text variant="header">Hello, World!</Text>
+      <Box marginTop="lg">
+        <Text variant="body" color="primary">
+          Welcome to Restyle
+        </Text>
+      </Box>
+    </Box>
+  );
+};
 
 export default Test;

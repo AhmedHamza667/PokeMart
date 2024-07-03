@@ -17,6 +17,8 @@ import {
   clearCart,
   addItemToCart,
 } from "../../../store/cartReducer";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from '../../../theme';
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -34,6 +36,7 @@ export default function Cart() {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+  const theme = useTheme<Theme>();
 
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
@@ -58,17 +61,17 @@ export default function Cart() {
         </View>
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.itemName}>{item.name}</Text>
+        <Text style={[styles.itemName, {color: theme.colors.text}]}>{item.name}</Text>
         <Text style={styles.itemPrice}>{"$" + item.price}</Text>
-        <Text>
-          Delivery by <Text style={styles.bold}>March 12, 2024</Text>
+        <Text style={{color: theme.colors.text}}>
+          Delivery by <Text style={[styles.bold]}>March 12, 2024</Text>
         </Text>
       </View>
     </View>
   );
 
   return (
-    <>
+    <View style={{backgroundColor: theme.colors.background, flex: 1}}>
       <FlatList
         style={{ paddingVertical: 20, }}
         data={cart}
@@ -76,8 +79,8 @@ export default function Cart() {
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
       />
-      <View style={styles.footer}>
-        <Text style={styles.total}>
+      <View style={[styles.footer]}>
+        <Text style={[styles.total, {color: theme.colors.text}]}>
           Total <Text style={styles.bold}>{"$" + total}</Text>
         </Text>
         <TouchableOpacity style={styles.orderButton}>
@@ -88,7 +91,7 @@ export default function Cart() {
       {/* <BottonNav /> */}
 
       <StatusBar style="light" />
-    </>
+    </View>
   );
 }
 

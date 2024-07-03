@@ -6,7 +6,6 @@ import FormInput from "../components/formInput";
 import { useSelector, useDispatch } from 'react-redux'
 import Toast from 'react-native-toast-message';
 import * as SecureStore from 'expo-secure-store';
-
 import {
   FlatList,
   Image,
@@ -17,7 +16,8 @@ import {
   TouchableOpacity,
   View,
   Platform,
-  StatusBar
+  StatusBar,
+  useColorScheme
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
@@ -26,6 +26,9 @@ import { RootState } from "../store/store";
 import { useEffect } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { authClient } from "../apollo";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from '../theme';
+
 export default function LogIn() {
 
 
@@ -161,6 +164,9 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
         "https://images.unsplash.com/photo-1702310636300-5b8103970683?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
   ];
+
+  const theme = useTheme<Theme>();
+
   const renderItem = ({ item }) => (
     <View
       style={[
@@ -172,7 +178,7 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
     </View>
   );
   return (
-    <SafeAreaView style={[styles.container, styles.AndroidSafeArea]}>
+    <SafeAreaView style={[styles.container, styles.AndroidSafeArea, {backgroundColor: theme.colors.background}]}>
       <KeyboardAvoidingView behavior="position">
         <FlatList
           data={data}
@@ -181,12 +187,11 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
           numColumns={2}
           contentContainerStyle={styles.grid}
         />
-        <View>
-        <Text style={styles.header}>Fashion Tap</Text>
-        <Text style={styles.intro}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio
-          temporibus autem incidunt, sequi
-        </Text>
+         <View>
+          <Text style={[styles.header, { color: theme.colors.text }]}>Fashion Tap</Text>
+          <Text style={[styles.intro, { color: theme.colors.text }]}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio temporibus autem incidunt, sequi
+          </Text>
         </View>
         
         <View style={styles.form}>
@@ -242,7 +247,6 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    
   },
   header: {
     fontSize: 32,

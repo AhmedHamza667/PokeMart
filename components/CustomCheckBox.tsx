@@ -3,6 +3,8 @@ import { View, TouchableOpacity, Text, StyleSheet, ScrollView } from "react-nati
 import { Ionicons } from "@expo/vector-icons";
 import Modal from "react-native-modal";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from '../theme';
 
 const CustomCheckbox = ({ isChecked, onChange }) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -10,6 +12,7 @@ const CustomCheckbox = ({ isChecked, onChange }) => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+  const theme = useTheme<Theme>();
 
   return (
     <>
@@ -30,18 +33,18 @@ const CustomCheckbox = ({ isChecked, onChange }) => {
         swipeDirection="left"
         animationIn="slideInLeft"
         animationOut="slideOutLeft"
-        style={styles.modal}
+        style={[styles.modal]}
       >
-        <View style={styles.modalContent}>
-          <Text style={styles.modalHeader}>Terms and Conditions</Text>
+        <View style={[styles.modalContent, {backgroundColor: theme.colors.background}]}>
+          <Text style={[styles.modalHeader, {color: theme.colors.text}]}>Terms and Conditions</Text>
           <ScrollView>
-            <Text style={styles.modalText}>
+            <Text style={[styles.modalText, {color: theme.colors.text}]}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt arcu vel arcu fermentum, eget facilisis ligula posuere. Fusce at felis et turpis egestas facilisis. Vivamus vehicula commodo libero, ac interdum purus blandit quis. Donec tincidunt enim vitae libero malesuada, at dictum mi scelerisque. Integer eu erat efficitur, lobortis purus a, fermentum arcu. Nullam vehicula augue id ultricies aliquet. Morbi quis velit magna. Phasellus vel lacinia velit.
             </Text>
-            <Text style={styles.modalText}>
+            <Text style={[styles.modalText, {color: theme.colors.text}]}>
               Donec vehicula ullamcorper magna, at pharetra nulla vestibulum ac. Praesent sed elit nec urna tincidunt feugiat. Integer efficitur sem eu dui vestibulum, vel convallis libero sodales. Quisque eget eros urna. Nullam fermentum turpis nec aliquet volutpat. Etiam facilisis odio eget libero volutpat sodales. Integer vel dolor nec dui eleifend consectetur. Aliquam erat volutpat. Quisque scelerisque arcu nec mauris accumsan, id gravida lorem vestibulum.
             </Text>
-            <Text style={styles.modalText}>
+            <Text style={[styles.modalText, {color: theme.colors.text}]}>
               Sed ultricies felis ac ligula blandit scelerisque. Nulla facilisi. 
             </Text>
           </ScrollView>

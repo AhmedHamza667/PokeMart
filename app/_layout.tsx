@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, useColorScheme } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Stack, useNavigation } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,6 +10,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ApolloProvider, gql } from "@apollo/client";
 import { pokemonClient } from "../apollo"; // Import the Apollo Client instance
 import { authClient } from "../apollo"; // Import the Apollo Client instance
+import { ThemeProvider } from "@shopify/restyle";
+import theme, { darkTheme, lightTheme } from "../theme";
 
 import productData from "../products.json";
 
@@ -30,6 +32,8 @@ export default function _layout() {
       setFontsLoaded(false);
     }
   }
+  const colorScheme = useColorScheme();
+  const selectedTheme = colorScheme === "dark" ? darkTheme : lightTheme;
 
   useEffect(() => {
     async function prepare() {
@@ -63,9 +67,10 @@ export default function _layout() {
   //     products: productData,
   //   },
   // });
-
+  
   return (
     <Provider store={store}>
+      <ThemeProvider theme={selectedTheme}>
       <ApolloProvider client={authClient}>
         <ApolloProvider client={pokemonClient}>
           <GestureHandlerRootView>
@@ -147,6 +152,7 @@ export default function _layout() {
           </GestureHandlerRootView>
         </ApolloProvider>
       </ApolloProvider>
+      </ThemeProvider>
     </Provider>
   );
 }
