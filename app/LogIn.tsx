@@ -109,7 +109,7 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
         },
       });
       const token = response.data.login.accessToken
-      console.log(token); // Handle successful login response
+      // console.log(token);
       await SecureStore.setItemAsync("token", token);
       Toast.show({
         type: 'success',
@@ -195,7 +195,7 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
         </View>
         
         <View style={styles.form}>
-          <Text>Enter Email</Text>
+          <Text style={{ color: theme.colors.text }}>Enter Email</Text>
           <FormInput
             control={control}
             name={"email"}
@@ -208,7 +208,7 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
             <Text style={styles.errorText}>{errors.email.message}</Text>
           )}
 
-          <Text>Password</Text>
+          <Text style={{ color: theme.colors.text }}>Password</Text>
           <FormInput
             control={control}
             name={"password"}
