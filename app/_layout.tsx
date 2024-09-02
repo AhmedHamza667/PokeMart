@@ -11,7 +11,7 @@ import { ApolloProvider, gql } from "@apollo/client";
 import { pokemonClient } from "../apollo"; // Import the Apollo Client instance
 import { authClient } from "../apollo"; // Import the Apollo Client instance
 import { ThemeProvider } from "@shopify/restyle";
-import theme, { darkTheme, lightTheme } from "../theme";
+import { darkTheme, lightTheme } from "../theme";
 
 import productData from "../products.json";
 

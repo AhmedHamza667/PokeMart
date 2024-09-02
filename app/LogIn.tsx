@@ -40,9 +40,6 @@ mutation Login($email: EmailPhone!, $password: Password!, $deviceId: String) {
 }
 `;
 
-const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,{
-  client: authClient});
-
 
 
   const dispatch = useDispatch()
@@ -61,107 +58,55 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
     resolver: zodResolver(formSchema),
   });
   const { isValid, errors } = formState;
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     Toast.show({
-  //       type: 'success',
-  //       text1: 'Login Successful',
-  //     });
-  //     setTimeout(() => {
-  //       router.push("/HomePage");
-  //     }, 1000);
-  //   }
-  //   else {
-  //     Toast.show({
-  //       type: 'error',
-  //       text1: 'Invalid email or password',
-  //     });
-  //   }
-  // }, [isLoggedIn]);
-
-  // const onSubmit = (data) => {
-  //   const {email, password} = data;
-  //   dispatch(login({email, password}))
-  // };
-
-  const GET_CURRENT_USER = gql`
-  query {
-    getCurrentUser {
-      address
-      countryCode
-      firstName
-      isActive
-      isVerified
-      lastName
-      email
-    }
-  }
-`;
-
-  const onSubmit = async (data) => {
-    const {email, password} = data;
-    try {
-      const response = await login({
-        variables: {
-          email,
-          password,
-          deviceId: '33B84027-FD24-493E-9120-2D3843A0CE9A'
-        },
-      });
-      const token = response.data.login.accessToken
-      // console.log(token);
-      await SecureStore.setItemAsync("token", token);
+  useEffect(() => {
+    if (isLoggedIn) {
       Toast.show({
         type: 'success',
         text1: 'Login Successful',
       });
-      setTimeout(async () => {
-        const { data: userData } = await authClient.query({
-          query: GET_CURRENT_USER,
-          context: {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        });
-        dispatch(updateUserDetails(userData.getCurrentUser));
-
+      setTimeout(() => {
         router.push("/HomePage");
       }, 1000);
-
-    } catch (error) {
+    }
+    else {
       Toast.show({
         type: 'error',
         text1: 'Invalid email or password',
       });
-      console.error('Login error:', error);
     }
+  }, [isLoggedIn]);
+
+  const onSubmit = (data) => {
+    const {email, password} = data;
+    dispatch(login({email, password}))
   };
+
+
   const data = [
     {
       id: "1",
       height: 140,
       image:
-        "https://images.unsplash.com/photo-1562040506-a9b32cb51b94?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1642534270237-ae57b321c5bc?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       id: "2",
       height: 195,
       image:
-        "https://images.unsplash.com/photo-1657249771314-b9869bb0e321?q=80&w=2846&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1609372332255-611485350f25?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       id: "3",
       height: 195,
       marginTop: -45,
       image:
-        "https://images.unsplash.com/photo-1614897464244-86c6b2fdda79?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1542887486-c0aeb6d2fc46?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       id: "4",
       height: 140,
       image:
-        "https://images.unsplash.com/photo-1702310636300-5b8103970683?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1715279239414-a47d59d0dc41?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
   ];
 
@@ -179,7 +124,7 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
   );
   return (
     <SafeAreaView style={[styles.container, styles.AndroidSafeArea, {backgroundColor: theme.colors.background}]}>
-      <KeyboardAvoidingView behavior="position">
+      <KeyboardAvoidingView behavior="position" style={styles.in}>
         <FlatList
           data={data}
           renderItem={renderItem}
@@ -188,9 +133,9 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
           contentContainerStyle={styles.grid}
         />
          <View>
-          <Text style={[styles.header, { color: theme.colors.text }]}>Fashion Tap</Text>
+          <Text style={[styles.header, { color: theme.colors.text }]}>PokeMarket</Text>
           <Text style={[styles.intro, { color: theme.colors.text }]}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio temporibus autem incidunt, sequi
+          Catch ’Em All, Shop ’Em All at PokeMarket!
           </Text>
         </View>
         
@@ -246,7 +191,10 @@ const [login, { data: loginData, loading, error }] = useMutation(LOGIN_MUTATION,
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
+    flex: 1,
+  },
+  in: {
+    marginHorizontal: 10,
   },
   header: {
     fontSize: 32,
