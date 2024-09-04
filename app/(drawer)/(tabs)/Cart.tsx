@@ -62,7 +62,7 @@ export default function Cart() {
       </View>
       <View style={styles.textContainer}>
         <Text style={[styles.itemName, {color: theme.colors.text}]}>{item.name}</Text>
-        <Text style={styles.itemPrice}>{"$" + item.price}</Text>
+        <Text style={styles.itemPrice}>{"$" + (item.price*item.quantity).toFixed(2)}</Text>
         <Text style={{color: theme.colors.text}}>
           Delivery by <Text style={[styles.bold]}>March 12, 2024</Text>
         </Text>
@@ -81,7 +81,7 @@ export default function Cart() {
       />
       <View style={[styles.footer]}>
         <Text style={[styles.total, {color: theme.colors.text}]}>
-          Total <Text style={styles.bold}>{"$" + total}</Text>
+          Total <Text style={styles.bold}>{"$" + (total).toFixed(2)}</Text>
         </Text>
         <TouchableOpacity style={styles.orderButton}>
           <Text style={styles.orderButtonText}>Place Order</Text>

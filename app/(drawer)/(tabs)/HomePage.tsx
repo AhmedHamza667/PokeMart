@@ -12,10 +12,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart } from "../../../store/cartReducer";
 import Toast from "react-native-toast-message";
 import { useQuery, gql } from "@apollo/client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
-import { authClient, pokemonClient } from "../../../apollo";
+import { pokemonClient } from "../../../apollo";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from '../../../theme';
 
@@ -36,11 +36,17 @@ const GET_POKEMON_DETAILS = gql`
 export default function HomePage() {
   const firstName = useSelector((state) => state.auth.firstName);
   const lastName = useSelector((state) => state.auth.lastName);
-  const [token, setToken] = useState(null);
+  const [itemPrices, setItemPrices] = useState({});
   const dispatch = useDispatch();
 
   const [refreshing, setRefreshing] = useState(false);
 
+  const generateRandomPrice = (min = 10, max = 100) => {
+    return (Math.random() * (max - min) + min).toFixed(2);
+  };
+
+  
+  
   const handleAddToCart = (item) => {
     dispatch(addItemToCart({ ...item, quantity: 1 }));
     Toast.show({
@@ -58,23 +64,45 @@ export default function HomePage() {
     }
   );
 
+  const generatePricesForItems = (items) => {
+    return items.reduce((acc, item) => {
+      if (!itemPrices[item.id]) {  // Check if the item doesn't already have a price
+        acc[item.id] = generateRandomPrice();
+      }
+      return acc;
+    }, {});
+  };
+  
+  
+  // Generate prices when data is first loaded
+  useEffect(() => {
+    if (data && data.pokemons && data.pokemons.results) {
+      const newPrices = generatePricesForItems(data.pokemons.results);
+      setItemPrices(prevPrices => ({ ...prevPrices, ...newPrices }));
+    }
+  }, [data]);  
+
   if (error) return <Text>Error: {error.message}</Text>;
-  const renderItem = ({ item }) => (
-    <View style={[styles.itemContainer, {backgroundColor: theme.colors.background}]}>
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: item.artwork }} style={styles.itemImage} />
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => handleAddToCart(item)}
-        >
-          <Text style={styles.addButtonText}>Add to Cart</Text>
-        </TouchableOpacity>
+  const renderItem = ({ item }) => {
+    const price = itemPrices[item.id]; // Retrieve the price from the state
+  
+    return (
+      <View style={[styles.itemContainer, {backgroundColor: theme.colors.background}]}>
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: item.artwork }} style={styles.itemImage} />
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => handleAddToCart({ ...item, price })} // Pass the price with the item
+          >
+            <Text style={styles.addButtonText}>Add to Cart</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={[styles.itemName, {color: theme.colors.text}]}>{item.name}</Text>
+        <Text style={[styles.itemPrice, {color: theme.colors.text}]}>{"$" + price}</Text>
       </View>
-      <Text style={[styles.itemName, {color: theme.colors.text}]}>{item.name}</Text>
-      <Text style={[styles.itemPrice, {color: theme.colors.text}]}>{"$" + item.price}</Text>
-    </View>
-  );
-  const theme = useTheme<Theme>();
+    );
+  };
+    const theme = useTheme<Theme>();
 
   if (loading || !data) {
     return (
@@ -114,6 +142,13 @@ export default function HomePage() {
       },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
+  
+        // Generate prices only for new items
+        const newPrices = generatePricesForItems(fetchMoreResult.pokemons.results);
+  
+        // Update the state with new prices
+        setItemPrices(prevPrices => ({ ...prevPrices, ...newPrices }));
+  
         return {
           pokemons: {
             ...fetchMoreResult.pokemons,
@@ -125,8 +160,7 @@ export default function HomePage() {
         };
       },
     });
-  };
-
+  };  
   const onRefresh = async () => {
     setRefreshing(true);
     await refetch(); // Refresh the data

@@ -4,7 +4,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 //data types
 interface cartItem {
   id: string,
-  name: number,
+  name: string,
   price: number,
   artwork: string,
   quantity: number,
@@ -26,16 +26,19 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addItemToCart: (state, action: PayloadAction<cartItem>) => {
-            const itemIndex = state.items.findIndex(item => item.id === action.payload.id);
-            if (itemIndex >= 0) {
-              state.items[itemIndex].quantity += 1;
-            } else {
-              state.items.push({...action.payload, quantity: 1});
-            }
-            state.total += action.payload.price;
-            state.badge += 1;
-          },
+      addItemToCart: (state, action: PayloadAction<cartItem>) => {
+        const itemIndex = state.items.findIndex(item => item.id === action.payload.id);
+        const price = parseFloat(action.payload.price.toString()); // Ensure price is a number
+  
+        if (itemIndex >= 0) {
+          state.items[itemIndex].quantity += 1;
+        } else {
+          state.items.push({ ...action.payload, quantity: 1 });
+        }
+  
+        state.total += price;
+        state.badge += 1;
+      },
           removeItemFromCart: (state, action: PayloadAction<string>) => {
             const itemIndex = state.items.findIndex(item => item.id === action.payload);
             if (itemIndex >= 0) {
