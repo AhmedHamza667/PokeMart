@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "eComApp",
-    "slug": "eComApp",
-    "scheme": "eComApp",
+    "name": "PokeMart",
+    "slug": "PokeMart",
+    "scheme": "PokeMart",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/figmaSplash.png",
+      "image": "./assets/PokeSplash.png",
       "resizeMode": "cover"
     },
     "ios": {
