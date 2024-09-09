@@ -6,18 +6,21 @@ import {
   FlatList,
   Image,
   RefreshControl,
+  Animated,
 } from "react-native";
+import { Ionicons } from '@expo/vector-icons'; 
 import { StatusBar } from "expo-status-bar";
 import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart } from "../../../store/cartReducer";
 import Toast from "react-native-toast-message";
 import { useQuery, gql } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { pokemonClient } from "../../../apollo";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from '../../../theme';
+import { useScrollToTop } from '@react-navigation/native'
 
 const GET_POKEMON_DETAILS = gql`
   query GetPokemons($limit: Int!, $offset: Int!) {
@@ -40,7 +43,10 @@ export default function HomePage() {
   const dispatch = useDispatch();
 
   const [refreshing, setRefreshing] = useState(false);
-
+  const ref = useRef(null);
+  const [scrollY] = useState(new Animated.Value(0)); // Track scroll position
+  const [showGoToTop, setShowGoToTop] = useState(false); // Manage button visibility
+  useScrollToTop(ref);
   const generateRandomPrice = (min = 10, max = 100) => {
     return (Math.random() * (max - min) + min).toFixed(2);
   };
@@ -83,6 +89,13 @@ export default function HomePage() {
   }, [data]);  
 
   if (error) return <Text>Error: {error.message}</Text>;
+  useEffect(() => {
+    const listener = scrollY.addListener(({ value }) => {
+      setShowGoToTop(value > 100);
+    });
+    return () => scrollY.removeListener(listener);
+  }, [scrollY]);
+
   const renderItem = ({ item }) => {
     const price = itemPrices[item.id]; // Retrieve the price from the state
   
@@ -166,6 +179,9 @@ export default function HomePage() {
     await refetch(); // Refresh the data
     setRefreshing(false);
   };
+  const scrollToTop = () => {
+    ref.current?.scrollToOffset({ offset: 0, animated: true });
+  };
 
   return (
     <>
@@ -173,20 +189,26 @@ export default function HomePage() {
         <Text style={[styles.helloMsg, {color: theme.colors.text}]}>Hello,</Text>
         <Text style={[styles.userName, {color: theme.colors.text}]}>{firstName + " " + lastName}</Text>
         <FlatList
+          ref={ref}
           numColumns={2}
           data={data.pokemons.results}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.list}
-          ListFooterComponent={() => (
-            <TouchableOpacity style={styles.more} onPress={loadMore}>
-              <Text style={styles.addButtonText}>Load More...</Text>
-            </TouchableOpacity>
-          )}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
+          onEndReached={loadMore}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: false }
+          )}
         />
+        {showGoToTop && (
+          <TouchableOpacity style={styles.goToTopButton} onPress={scrollToTop}>
+      <Ionicons name="arrow-up-outline" size={30} color="white" />
+          </TouchableOpacity>
+        )}
       </View>
       <Toast />
       <StatusBar style="light" />
@@ -270,5 +292,14 @@ const styles = StyleSheet.create({
     width: "30%",
     marginBottom: 20,
     alignSelf: "center",
+  },
+  goToTopButton: {
+    position: "absolute",
+    bottom: 80,
+    right: 10,
+    backgroundColor: "#28a745",
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    borderRadius: 20,
   },
 });
