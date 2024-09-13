@@ -8,7 +8,7 @@ import {
   RefreshControl,
   Animated,
 } from "react-native";
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart } from "../../../store/cartReducer";
@@ -19,8 +19,8 @@ import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { pokemonClient } from "../../../apollo";
 import { useTheme } from "@shopify/restyle";
-import { Theme } from '../../../theme';
-import { useScrollToTop } from '@react-navigation/native'
+import { Theme } from "../../../theme";
+import { useScrollToTop } from "@react-navigation/native";
 
 const GET_POKEMON_DETAILS = gql`
   query GetPokemons($limit: Int!, $offset: Int!) {
@@ -34,7 +34,6 @@ const GET_POKEMON_DETAILS = gql`
     }
   }
 `;
-
 
 export default function HomePage() {
   const firstName = useSelector((state) => state.auth.firstName);
@@ -51,8 +50,6 @@ export default function HomePage() {
     return (Math.random() * (max - min) + min).toFixed(2);
   };
 
-  
-  
   const handleAddToCart = (item) => {
     dispatch(addItemToCart({ ...item, quantity: 1 }));
     Toast.show({
@@ -72,21 +69,21 @@ export default function HomePage() {
 
   const generatePricesForItems = (items) => {
     return items.reduce((acc, item) => {
-      if (!itemPrices[item.id]) {  // Check if the item doesn't already have a price
+      if (!itemPrices[item.id]) {
+        // Check if the item doesn't already have a price
         acc[item.id] = generateRandomPrice();
       }
       return acc;
     }, {});
   };
-  
-  
+
   // Generate prices when data is first loaded
   useEffect(() => {
     if (data && data.pokemons && data.pokemons.results) {
       const newPrices = generatePricesForItems(data.pokemons.results);
-      setItemPrices(prevPrices => ({ ...prevPrices, ...newPrices }));
+      setItemPrices((prevPrices) => ({ ...prevPrices, ...newPrices }));
     }
-  }, [data]);  
+  }, [data]);
 
   if (error) return <Text>Error: {error.message}</Text>;
   useEffect(() => {
@@ -98,9 +95,14 @@ export default function HomePage() {
 
   const renderItem = ({ item }) => {
     const price = itemPrices[item.id]; // Retrieve the price from the state
-  
+
     return (
-      <View style={[styles.itemContainer, {backgroundColor: theme.colors.background}]}>
+      <View
+        style={[
+          styles.itemContainer,
+          { backgroundColor: theme.colors.background },
+        ]}
+      >
         <View style={styles.imageContainer}>
           <Image source={{ uri: item.artwork }} style={styles.itemImage} />
           <TouchableOpacity
@@ -110,18 +112,24 @@ export default function HomePage() {
             <Text style={styles.addButtonText}>Add to Cart</Text>
           </TouchableOpacity>
         </View>
-        <Text style={[styles.itemName, {color: theme.colors.text}]}>{item.name}</Text>
-        <Text style={[styles.itemPrice, {color: theme.colors.text}]}>{"$" + price}</Text>
+        <Text style={[styles.itemName, { color: theme.colors.text }]}>
+          {item.name}
+        </Text>
+        <Text style={[styles.itemPrice, { color: theme.colors.text }]}>
+          {"$" + price}
+        </Text>
       </View>
     );
   };
-    const theme = useTheme<Theme>();
+  const theme = useTheme<Theme>();
 
   if (loading || !data) {
     return (
       <SkeletonPlaceholder borderRadius={4}>
         <LinearGradient style={{ flex: 1 }}>
-          <View style={{ margin: 25, backgroundColor: theme.colors.background}}>
+          <View
+            style={{ margin: 25, backgroundColor: theme.colors.background }}
+          >
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <View style={{ marginHorizontal: 20 }}>
                 <Image
@@ -155,13 +163,15 @@ export default function HomePage() {
       },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
-  
+
         // Generate prices only for new items
-        const newPrices = generatePricesForItems(fetchMoreResult.pokemons.results);
-  
+        const newPrices = generatePricesForItems(
+          fetchMoreResult.pokemons.results
+        );
+
         // Update the state with new prices
-        setItemPrices(prevPrices => ({ ...prevPrices, ...newPrices }));
-  
+        setItemPrices((prevPrices) => ({ ...prevPrices, ...newPrices }));
+
         return {
           pokemons: {
             ...fetchMoreResult.pokemons,
@@ -173,7 +183,7 @@ export default function HomePage() {
         };
       },
     });
-  };  
+  };
   const onRefresh = async () => {
     setRefreshing(true);
     await refetch(); // Refresh the data
@@ -185,9 +195,13 @@ export default function HomePage() {
 
   return (
     <>
-      <View style={[styles.rest, {backgroundColor: theme.colors.background}]}>
-        <Text style={[styles.helloMsg, {color: theme.colors.text}]}>Hello,</Text>
-        <Text style={[styles.userName, {color: theme.colors.text}]}>{firstName + " " + lastName}</Text>
+      <View style={[styles.rest, { backgroundColor: theme.colors.background }]}>
+        <Text style={[styles.helloMsg, { color: theme.colors.text }]}>
+          Hello,
+        </Text>
+        <Text style={[styles.userName, { color: theme.colors.text }]}>
+          {firstName + " " + lastName}
+        </Text>
         <FlatList
           ref={ref}
           numColumns={2}
@@ -206,7 +220,7 @@ export default function HomePage() {
         />
         {showGoToTop && (
           <TouchableOpacity style={styles.goToTopButton} onPress={scrollToTop}>
-      <Ionicons name="arrow-up-outline" size={30} color="white" />
+            <Ionicons name="arrow-up-outline" size={30} color="white" />
           </TouchableOpacity>
         )}
       </View>
@@ -238,7 +252,6 @@ const styles = StyleSheet.create({
   list: {
     paddingHorizontal: 10,
     paddingBottom: 60,
-
   },
   itemContainer: {
     flex: 1,

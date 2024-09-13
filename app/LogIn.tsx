@@ -1,11 +1,8 @@
-import { Link } from "expo-router";
-// import { StatusBar } from "expo-status-bar";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "../components/formInput";
 import { useSelector, useDispatch } from 'react-redux'
 import Toast from 'react-native-toast-message';
-import * as SecureStore from 'expo-secure-store';
 import {
   FlatList,
   Image,
@@ -24,28 +21,16 @@ import { Controller, useForm } from "react-hook-form";
 import { login, updateUserDetails } from "../store/authReducer";
 import { RootState } from "../store/store";
 import { useEffect } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { authClient } from "../apollo";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from '../theme';
 
 export default function LogIn() {
 
-
-const LOGIN_MUTATION = gql`
-mutation Login($email: EmailPhone!, $password: Password!, $deviceId: String) {
-  login(emailOrPhoneNumber: $email, password: $password, deviceId: $deviceId) {
-    accessToken
-  }
-}
-`;
-
-
-
   const dispatch = useDispatch()
   const router = useRouter();
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-
+  const loginError = useSelector((state: RootState) => state.auth.loginError);
+    
   const formSchema = z.object({
     email: z.string().min(10, "email must be at least 10 characters"),
     password: z.string().min(4, "Password must be at least 4 characters"),
@@ -58,7 +43,10 @@ mutation Login($email: EmailPhone!, $password: Password!, $deviceId: String) {
     resolver: zodResolver(formSchema),
   });
   const { isValid, errors } = formState;
-  useEffect(() => {
+    
+  const onSubmit = (data) => {
+    const { email, password } = data;
+    dispatch(login({ email, password }));
     if (isLoggedIn) {
       Toast.show({
         type: 'success',
@@ -67,20 +55,13 @@ mutation Login($email: EmailPhone!, $password: Password!, $deviceId: String) {
       setTimeout(() => {
         router.push("/HomePage");
       }, 1000);
-    }
-    else {
+    } else if (loginError) {
       Toast.show({
         type: 'error',
         text1: 'Invalid email or password',
       });
     }
-  }, [isLoggedIn]);
-
-  const onSubmit = (data) => {
-    const {email, password} = data;
-    dispatch(login({email, password}))
-  };
-
+  };  
 
   const data = [
     {
@@ -124,7 +105,7 @@ mutation Login($email: EmailPhone!, $password: Password!, $deviceId: String) {
   );
   return (
     <SafeAreaView style={[styles.container, styles.AndroidSafeArea, {backgroundColor: theme.colors.background}]}>
-      <KeyboardAvoidingView behavior="position" style={styles.in}>
+      <KeyboardAvoidingView behavior="padding" style={styles.in}>
         <FlatList
           data={data}
           renderItem={renderItem}

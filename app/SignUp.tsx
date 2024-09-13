@@ -16,6 +16,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -77,6 +78,7 @@ export default function SignUp() {
   return (
     <SafeAreaView style={[styles.container, {backgroundColor: theme.colors.background}]}>
       <KeyboardAvoidingView behavior="position">
+        <ScrollView>
         <Text style={[styles.header, {color: theme.colors.text}]}>Enter your details</Text>
         <View style={styles.form}>
           <Text style={[styles.text, {color: theme.colors.text}]}>First Name</Text>
@@ -180,6 +182,7 @@ export default function SignUp() {
         </View>
         <StatusBar style="light" />
         <Toast />
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

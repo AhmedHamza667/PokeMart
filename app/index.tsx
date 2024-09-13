@@ -4,7 +4,7 @@ import { Redirect, useRouter } from "expo-router";
 export default function Page() {
 
 
-    return <Redirect href={'/HomePage'} />;
+    return <Redirect href={'/LogIn'} />;
 
 
 }

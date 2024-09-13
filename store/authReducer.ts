@@ -8,8 +8,8 @@ export interface AuthState {
   email: string,
   password: string,
   profilePicture: any,
-  isLoggedIn: boolean
-
+  isLoggedIn: boolean,
+  loginError: boolean,  
 }
 //initial state
 const initialState: AuthState = {
@@ -18,8 +18,8 @@ const initialState: AuthState = {
   email: 'test@test.com',
   password: '11111111',
   profilePicture: require('../assets/profileImg.png'), 
-  isLoggedIn: false
-
+  isLoggedIn: false,
+  loginError: false,
 }
 //reducers
 export const authSlice = createSlice({
@@ -35,8 +35,12 @@ export const authSlice = createSlice({
       login: (state, action: PayloadAction<{email: string, password: string}>) => {
         if (state.email === action.payload.email && state.password === action.payload.password) {
           state.isLoggedIn = true;
+          state.loginError = false;  // Clear any error on success
+        } else {
+          state.loginError = true;   // Set error flag if login fails
+          state.isLoggedIn = false;
         }
-      },
+      },  
       logout: (state) => {
         state.isLoggedIn = false;
       },
