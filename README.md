@@ -63,7 +63,13 @@ Follow these steps to run the project locally:
 
 ## Screenshots
 
-![Test](assets/profileImg.png)
+![Test](assets/screenshots/splachSS.PNG)
+![Test](assets/screenshots/signupSS.PNG)
+![Test](assets/screenshots/loginSS.PNG)
+![Test](assets/screenshots/homeSS.PNG)
+![Test](assets/screenshots/cartSS.PNG)
+![Test](assets/screenshots/profileSS.PNG)
+![Test](assets/screenshots/drawerSS.PNG)
 
 ## License
 
