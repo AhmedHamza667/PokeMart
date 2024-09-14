@@ -13,6 +13,7 @@ PokeMart is an e-commerce application where users can create an account, log in,
 - Pokémon listing fetched via GraphQL.
 - Add Pokémon to cart.
 - Responsive UI design with error handling.
+- Light and dark mode based on system settings.
 
 ## Tech Stack
 
@@ -63,13 +64,13 @@ Follow these steps to run the project locally:
 
 ## Screenshots
 
-![Test](assets/screenshots/splachSS.PNG)
-![Test](assets/screenshots/signupSS.PNG)
-![Test](assets/screenshots/loginSS.PNG)
-![Test](assets/screenshots/homeSS.PNG)
-![Test](assets/screenshots/cartSS.PNG)
-![Test](assets/screenshots/profileSS.PNG)
-![Test](assets/screenshots/drawerSS.PNG)
+<img src="assets/screenshots/splachSS.PNG" alt="Splash Screen" width="300"/>
+![Sign Up](assets/screenshots/signupSS.PNG)
+![Log In](assets/screenshots/loginSS.PNG)
+![Home Page](assets/screenshots/homeSS.PNG)
+![Cart](assets/screenshots/cartSS.PNG)
+![Profile](assets/screenshots/profileSS.PNG)
+![Drawer](assets/screenshots/drawerSS.PNG)
 
 ## License
 
