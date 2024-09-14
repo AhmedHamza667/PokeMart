@@ -65,12 +65,12 @@ Follow these steps to run the project locally:
 ## Screenshots
 
 <img src="assets/screenshots/splachSS.PNG" alt="Splash Screen" width="300"/>
-![Sign Up](assets/screenshots/signupSS.PNG)
-![Log In](assets/screenshots/loginSS.PNG)
-![Home Page](assets/screenshots/homeSS.PNG)
-![Cart](assets/screenshots/cartSS.PNG)
-![Profile](assets/screenshots/profileSS.PNG)
-![Drawer](assets/screenshots/drawerSS.PNG)
+<img src="assets/screenshots/signupSS.PNG" alt="Sign Up" width="300"/>
+<img src="assets/screenshots/loginSS.PNG" alt="Log In" width="300"/>
+<img src="assets/screenshots/homeSS.PNG" alt="Home Page" width="300"/>
+<img src="assets/screenshots/cartSS.PNG" alt="Cart" width="300"/>
+<img src="assets/screenshots/profileSS.PNG" alt="Profile" width="300"/>
+<img src="assets/screenshots/drawerSS.PNG" alt="Drawer" width="300"/>
 
 ## License
 
