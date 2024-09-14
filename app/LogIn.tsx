@@ -33,7 +33,7 @@ export default function LogIn() {
     
   const formSchema = z.object({
     email: z.string().min(10, "email must be at least 10 characters"),
-    password: z.string().min(4, "Password must be at least 4 characters"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
   });
   const { control, handleSubmit, formState, setFocus, register } = useForm({
     defaultValues: {
