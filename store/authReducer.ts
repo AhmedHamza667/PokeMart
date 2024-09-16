@@ -17,7 +17,7 @@ const initialState: AuthState = {
   lastName: 'User...',
   email: 'test@test.com',
   password: '11111111',
-  profilePicture: require('../assets/profileImg.png'), 
+  profilePicture: require('../assets/account.png'), 
   isLoggedIn: false,
   loginError: false,
 }
